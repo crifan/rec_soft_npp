@@ -1,0 +1,1252 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<!DOCTYPE chapter
+[
+
+<!ENTITY % crl_ent PUBLIC "crl.ent" 'http://www.crifan.com/files/res/docbook/entity/crl.ent'>
+%crl_ent;
+]>
+
+<chapter 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    
+    xml:id="npp_function">
+<title>Notepad++的功能详解</title>
+
+<para>下面就来详细介绍Notepad++中的N多好用易用的功能：</para>
+<para>下列功能的排名先后顺序，由个人所认为的该功能的重要性高低而决定</para>
+
+<sect1 xml:id="npp_func_right_open"><title>Notepad++支持右击打开所选文件</title>
+    <para>即，通过右击某文件，然后选择"Edit with Notepad++"，就可以用Notepad++打开该文件了。</para>
+    <para>虽然此功能很简单，但是相当的实用，而且也是最常用的功能。</para>
+    <note>
+        <para>此功能是由开始安装Notepad++的时候，选择是否安装此功能的。</para>
+        <para>Notepad++安装程序中，默认已选择开启该功能了。</para>
+        <para>详情参考：<xref linkend="fg.context_menu_open_entry" /></para>
+    </note>
+</sect1>
+
+<sect1 xml:id="npp_func_code_hl"><title>Notepad++的语法高亮</title>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/npp_hl_makefile.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/npp_hl_makefile.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>语法高亮，Syntax Highlight，也被叫做代码高亮</para>
+    <para>其实，其他很多文本编辑器也都支持此语法高亮功能，但是发现Notepad++支持的语言更多，更方便使用。</para>
+    <para>个人用过的，就有C,C++,Python,XML,HTML,xml,Javascript等，</para>
+    <para>甚至还支持一些相对很多人不是很常用的类型，比如makefile，tex/LaTex等。</para>
+    <para>而对于这些的支持，作为开发者的话，如果等你遇到了，有此需求了，就会发现，这些功能是多么有用。</para>
+    
+    <sect2 xml:id="npp_hl_logic"><title>语法高亮的实现逻辑</title>
+        <para>Notepad++对于任何一个文件，想要实现对应的语法高亮的话，大概逻辑是：</para>
+        <para>先是根据该文件后缀，去判断该文件属于哪种类型的文件</para>
+        <para>然后再调用对应的语法高亮配置，给不同的关键字（和符合对应逻辑的代码），设置不同的属性，包括字体粗细，改变颜色等</para>
+        <para>最终得到我们所看到的语法高亮后的代码的效果。</para>
+        <para>因此，如果文件没有后缀，或者不支持该文件的后缀名，则Notepad++打开该文件后，也没法自动对其实现语法高亮。</para>
+        <para>比如对于一个文件，Makefile.mk，其是一个makefile文件，用Notepad++打开后，由于无法识别后缀，不知道是何种类型文件，所以无法语法高亮：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/can_not_hl_mk.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/can_not_hl_mk.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>而如何对不支持的文件类型实现语法高亮，就是下面<xref linkend="unknown_file_highlight" />要介绍的内容了。</para>
+    </sect2>
+    
+    <sect2 xml:id="unknown_file_highlight"><title>实现未知类型（不支持的后缀名）的文件的语法高亮</title>
+        <sect3 xml:id="manually_set_lan_hl"><title>通过手动设置语言，实现未知类型文件的语法高亮</title>
+            <para>语言(L)&rArr;M&rArr;Makefile：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/lan_m_makefile.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/lan_m_makefile.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>即可看到语法高亮的效果了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/highlighted_mk_file.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/highlighted_mk_file.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <note>通过手动设置语言的方式实现语法高亮，只对当前打开的文件有效，关闭再打开，就失效了，就需要再手动操作一次，相对比较麻烦。推荐用下面的办法:<xref linkend="add_suf_support_hl" /></note>
+        </sect3>
+
+        <sect3 xml:id="add_suf_support_hl"><title>通过添加文件后缀名，实现未知类型文件的语法高亮</title>
+            <para>设置&rArr;语言格式设置&rArr;语言，选择Makefile</para>
+            <para>可以看到左下角有默认扩展名为mak，意思为，当Notepad++打开mak后缀的文件的时候，就识别为Makefile文件，调用Makefile的语法高亮设置，对此文件进行颜色设置。</para>
+            <para>对应的，想要支持mk后缀的Makefile文件的话，在自定义扩展名中，加上对应的<userinput>mk</userinput></para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/add_suf_mk.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/add_suf_mk.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>同样可以实现对于后缀名为mk的文件，去实现对应的Makefile的语法高亮的效果。</para>
+
+            <tip>
+                <para>通过添加后缀名的方式，则可以实现之后的每次打开此后缀的文件名，都可以自动识别，并实现语法高亮的效果了。即一劳永逸的效果。</para>
+            </tip>
+
+            <note>
+                <itemizedlist>
+                    <listitem>不要将<userinput>mk</userinput>写成<userinput>.mk</userinput>或<userinput>*.mk</userinput>
+                        <para>添加自定义扩展名的时候，不需要加点"."，也不需要加星号点"*."，否则是无法识别的。</para>
+                    </listitem>
+                    <listitem>
+                        <para>想要给自定义扩展名中，添加多个后缀名的话，经过测试，正确做法是：多个文件名后缀之间以<emphasis>空格</emphasis>区分：</para>
+                        <informalfigure>
+                            <mediaobject>
+                                <imageobject role="html"><imagedata fileref="images/function/multi_suf_hl.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                                <imageobject role="fo">  <imagedata fileref="images/function/multi_suf_hl.png" align="center" scalefit="1" width="100%"/></imageobject>
+                            </mediaobject>
+                        </informalfigure>
+                        <para>而不是（我）原以为的，分号";"或者冒号非分隔符":"。</para>
+                    </listitem>
+                </itemizedlist>
+            </note>
+        </sect3>
+    </sect2>
+    
+    <sect2 xml:id="npp_custom_hl_color"><title>自定义语法高亮的颜色</title>
+        <para>对于语法高亮时显示的颜色，也可以自定义：设置&rArr;语言格式设置：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2538904289947275661.jpg" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2538904289947275661.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>接下来，就可以根据自己需要配置不同的颜色了。</para>
+    </sect2>
+</sect1>
+
+<sect1 xml:id="npp_func_multi_enc"><title>Notepad++的多种编码支持</title>
+    <tip xml:id="tip.char_encoding"><title>关于字符编码的知识</title>
+        <para>关于字符编码方面的知识，如果不是很了解的话，建议先去看看<xref linkend="ref.char_encoding" /></para>
+        <para>以及相关的中文字符编码：<xref linkend="ref.zhcn_charset" /></para>
+    </tip>
+    
+    <para>在对什么字符编码，以及常见的一些字符编码，比如<link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html#enc_iso8859">ISO 8859</link>，<link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html#enc_utf8">UTF-8</link>，<link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html#enc_gb2312">GB2312</link>，<link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html#enc_gbk">GBK</link>等，有个最基本的了解之后，我们再来看看Notepad++在字符编码方面，有哪些功能：</para>
+    
+    <sect2 xml:id="npp_check_cur_enc"><title>用Notepad++查看当前文件编码</title>
+        <para>对于想要知道当前文件所用的字符编码类型，可以如下操作：</para>
+        <para>选择 格式(M)，然后就可以看到当前字符编码类型了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/check_cur_file_encoding.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/check_cur_file_encoding.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>可以看到，当前xml文件所用字符编码类型为"以 UTF-8 无 BOM 格式编码"。</para>
+        <tip>关于UTF-8的BOM，不了解的可参考<xref linkend="ref.utf8_bom_efbbbf" /></tip>
+        <para>需要提及的一些是，一般我们中文和英文，最常用的几个字符编码，大概有：</para>
+        <itemizedlist>
+            <listitem>最通用的UTF-8，包含了（全世界几乎）所有的字符</listitem>
+            <listitem>双字节的Unicode/UTF-16/UCS-2 LE(Little Endian)</listitem>
+            <listitem>简体中文：GB18030 &gt; GBK &gt; GB2312</listitem>
+            <listitem>繁体中文：Big5</listitem>
+        </itemizedlist>
+        <para>对应的编码，截图如下：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1248?filename=multi%20charset%20support.jpg" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1248?filename=multi%20charset%20support.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="npp_use_proper_enc"><title>用Notepad++选用合适的编码打开对应的文件</title>
+        <para>当你打开某个文件时，可能会遇到一些乱码。</para>
+        <para>此时，如果知道当前文本本身是用的是何种编码，则可在Notepad++中选择对应编码打开，就可以正确显示文件内容了。</para>
+        <example xml:id="eg.npp_use_proper_enc"><title>在Notepad++中使用ISO-8859-1编码打开VirtualBox的Manual的HTML源码</title>
+            <para>比如，在打开<link xl:href="http://www.crifan.com/category/work_and_job/virtual_machine/virtualbox-virtual_machine/">VirtualBox</link>官网中的<link xl:href="https://www.virtualbox.org/manual/UserManual.html">用户手册(UserManual)</link>的HTML源码的时候，默认是用ANSI编码打开的，所以会有乱码：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/def_ansi_messy_code.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/def_ansi_messy_code.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <tip>
+                <para>对于如何用Notepad++打开该HTML并高亮显示，可参考<xref linkend="npp_func_def_html_viewer" /></para>
+            </tip>
+            <para>此时，注意到该HTML源码已经通过charset=ISO-8859-1标明了使用的编码是ISO-8859-1了，所以，此时可以去改为对应的ISO-8859-1编码：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/change_to_iso_8859_1.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/change_to_iso_8859_1.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>就可以看到对应的乱码的字符，都可以正常显示了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/iso_8859_1_show_normal_char.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/iso_8859_1_show_normal_char.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>由此，就可以实现了，在Notepad++中，使用正确的编码打开相应的文件，解决了乱码显示问题。</para>
+        </example>
+        <tip xml:id="tip.html_try_charset"><title>通过html中的charset推测编码</title>
+            <para>此处由于HTML的特殊性，正常情况下，都会在头部加上charset=xxx来指明当前HTML所用编码</para>
+            <para>所以此处可以利用此信息去以正确编码显示出内容，而避免了乱码。</para>
+            <para>对于其他类型文件，在不知道文件编码的情况下，就只能自己手动多试试不同编码了。</para>
+            <para>最常见的几种，其实也就是那几种，比如UTF-8,ANSI(此处为GBK),GB2312之类的。</para>
+        </tip>
+    </sect2>
+    
+    <sect2 xml:id="npp_messy_guess_switch_correct_charset"><title>如果乱码则切换到所推测的正确的编码直至消除乱码</title>
+        <para>如上所述，当HTML源码时，可以通过charset去得知文件编码。</para>
+        <para>但是，很多时候，我们去打开一个文件时，</para>
+        <para>可能会遇到乱码，但是由于未必立刻就已知其文件编码是什么</para>
+        <para>所以，只能去猜测其编码是什么，然后再切换到对应的编码类型，去查看内容是否可以正常显示。</para>
+        <example xml:id="eg.change_to_iso8859_1_remove_messy"><title>出现乱码，猜测出是西欧编码，切换到ISO 8859-1而消除乱码</title>
+            <para>比如遇到一个例子：</para>
+            <para>打开文件时，出现是乱码：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/standard_hcf_contain_messy_code.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/standard_hcf_contain_messy_code.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>看起来，就像是西欧类的字符，所以，去切换到对应的ISO 8859-1编码：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/change_to_west_europe_iso8859_1.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/change_to_west_europe_iso8859_1.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>然后真的就消除了乱码，可以正常显示出对应的一些特殊的西欧字符了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/messy_code_can_show_normally.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/messy_code_can_show_normally.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>此处，很明显，由于对于编码稍微熟悉，所以一次就猜对了编码，而使得快速消除了乱码。</para>
+            <para>如果，你对于编码不是很熟悉，则可以多去尝试不同的编码，</para>
+            <para>最后，肯定也还是可以切换到正确的编码，可以正常显示字符的。</para>
+            <para>而随着对于字符编码的了解越来越深入，则自然会越加熟悉的，越容易一次或几次就猜对文件的正确的编码的。</para>
+        </example>
+        <para></para>
+    </sect2>
+    
+    <sect2 xml:id="npp_diff_enc_conversion"><title>用Notepad++实现不同字符编码之间的转换</title>
+        <para>很多时候，我们需要在不同字符编码之间，进行相互转换。</para>
+        <para>或者由于某些需要，要建立对应的编码的文件。</para>
+        <para>比如，写Python代码的时候，常需要文件本身的编码就是UTF-8的，</para>
+        <para>此时，就可以用Notepad++的字符编码转换方面的功能了。</para>
+        <para></para>
+        <para>比如，此处将本地一个UTF-8的xml文件：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/utf8_xml.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/utf8_xml.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>其中，中文字符所对应的16进制的如下：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/xml_utf8_hex.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/xml_utf8_hex.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>然后点击“转为 ANSI 编码格式”：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/change_utf8_to_ansi.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/change_utf8_to_ansi.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>即可转为ANSI编码了，此时文件已被修改，所以先保存一下该文件，然后再查看编码，就变为ANSI编码了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/changed_ansi_encode.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/changed_ansi_encode.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>此时再去查看对应的中文字符所对应的16进制的值，就变了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/ansi_hex.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/ansi_hex.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>而此处的ANSI编码，可以简单的理解为“本地”编码，而此处是本地编码是中文的GBK，所以此处ANSI即为GBK中文编码。</para>
+        <para>相应地，可以根据自己需要，在多个不同的字符编码之间互相转换。</para>
+        <para></para>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_set_def_enc"><title>设置Notepad++新建文件（默认）的编码类型</title>
+        <para>当我们在Notepad++中新建一个文件时，可以通过<xref linkend="npp_check_cur_enc" />看到新建的文件所使用的字符编码：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/new_create_utf8.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/new_create_utf8.png" align="center" scalefit="0" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>此处为UTF-8。</para>
+        <para>而想要改变新建文件的默认所用字符编码，可以通过：</para>
+        <para>设置(T) &rArr; 首选项...</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/set_first_option.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/set_first_option.png" align="center" scalefit="0" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>新建，中的“编码”：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/set_new_create_enc.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/set_new_create_enc.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>然后设置为自己所需要的编码格式。</para>
+    </sect2>
+
+    <note><title>Notepad++的bug：有时候执行编码转换会导致内容丢失</title>
+        <para>我遇到过好多次了，在执行代码转换的时候，结果是当前Notepad++打开页面变成空白了，即内容瞬间丢失了，按Ctrl+Z，也无法撤销此操作。</para>
+        <para>如果不是有备份文件的话，则就会导致文件内容丢失。</para>
+        <para>如果是很重要的文件的话，文件内容丢失，损失还是很严重的。</para>
+        <para>尽管Notepad++此编码转换导致文件内容丢失的bug，出现的概率很小，但是也还是建议，对于重要文件的编码转换，转换之前，先备份一下。</para>
+    </note>
+</sect1>
+
+<xi:include href="ch0304_npp_function_regex.xml" />
+
+<sect1 xml:id="npp_func_count_select"><title>Notepad++的计数功能</title>
+    <para>搜索(S) &rArr; 查找 Ctrl+F，可以打开查找对话框。</para>
+    <para>然后选择某个单词，短语等内容后，点击计数，就可以实现统计所选内容在当前文件出现的次数：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1247?filename=count%20occurence.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1247?filename=count%20occurence.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>即，计数的功能。</para>
+    <para>之前其实是一直没有注意有此功能的。</para>
+    <para>直到有一天，在某次开发过程中，想要知道当前文件，包含了多少个该docbook单词，即该单词出现了多少次，</para>
+    <para>而一般方法是用上下查找的办法，一点点自己去数，</para>
+    <para>而后来发现，Notepad++中的查找对话框中，有个”计数“按钮。</para>
+    <para>当你双击选择某个单词后，本身Notepad++就会自动帮你高亮对应单词，</para>
+    <para>然后再点击”计数“，就可以弹出对话框显示统计的结果，显示该单词一共出现了多少次。</para>
+    <para>然后不得不感叹，Notepad++真是很是方便使用啊。</para>
+</sect1>
+
+<xi:include href="ch0306_npp_function_column_mode.xml" />
+
+<sect1 xml:id="npp_func_code_collapse"><title>Notepad++的代码折叠</title>
+    <para>代码折叠，即，Notepad++对于不同语言，在语法高亮基础上，还能检测出对应的C，Python等语言的单个的函数，xml等语言的标签，</para>
+    <para>然后对这些独立的代码部分，最开始端，有个加减号的可点击的小图标，对应的可以展开或折叠其对应的代码。</para>
+    <para>截图说明：</para>
+    <figure xml:id="fg.npp_code_collapse"><title>XML文件中的Notepad++的代码折腾功能</title>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2794765043777250853.jpg" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2794765043777250853.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </figure>
+    <para>估计很多人可能和我最开始的想法一样，觉得此代码折叠功能，好像没啥实际用途。</para>
+    <para>直到有一天，我发现，代码折叠，至少对于更加清晰明确xml文件的架构和层次，有不小的帮助。</para>
+    <para>比如，我当前的xml文件，里面有很多个章节，很多行代码，而如果没有代码折叠，则每次定位到某个章节的时候，都需要找半天。</para>
+    <para>而有了代码折腾后，把其他暂时不关心的章节的内容，先折叠起来：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/xml_code_hide.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/xml_code_hide.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>这样，立刻就可以把几百行的内容，暂时隐藏起来，使得整个xml的架构层次，很清晰明了，方便后续的查看编辑相关的内容。</para>
+    <para>如此，越加发现，其实很多功能，真的得到你需要用到，才会发现如此的有用。</para>
+</sect1>
+
+<sect1 xml:id="npp_func_auto_complete"><title>Notepad++的自动完成</title>
+    <para>设置(T) &rArr; 首选项... &rArr; 备份 &rArr; 备份与自动完成 &rArr; 自动完成 &rArr; 勾选 "所有输入均启用自动完成","函数自动完成","输入时提示函数参数"</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/backup_auto_completion.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/backup_auto_completion.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>我之前所用过的自动完成功能，至少包括：</para>
+    <itemizedlist>
+        <listitem>
+            <para>docbook的自动完成的支持。各种标签（docbook中称为元素）的自动完成：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/auto_complete_docbook.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/auto_complete_docbook.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </listitem>
+        <listitem>
+            <para>python的自动完成的支持，包括函数和库：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/auto_complete_python.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/auto_complete_python.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </listitem>
+        <listitem>
+            <para>php中可以自动完成函数：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/auto_complete_php.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/auto_complete_php.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>还有函数参数提示：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/auto_complete_php_func_para.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/auto_complete_php_func_para.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </listitem>
+    </itemizedlist>
+    <para></para>
+    <para>此自动完成的好处，还是很明显的：</para>
+    <para>至少不用让你完全记住每种语言的所有函数（关键字）的全部单词，只需要写出部分字母</para>
+    <para>剩下的字母就可以通过Notepad++帮你自动匹配，就可以通过上下键选择所需项，然后按Tab，实现自动补全了。</para>
+    <para>就不用全部一个个字母的输入了，还是很方便使用的。</para>
+    
+    <tip xml:id="autocomplete_logic"><title>Notepad++自动完成功能内在实现的逻辑</title>
+        <para>之前没太注意，所以也不太清楚，对于此自动完成的功能，到底是如何实现的，或者说，想要搞懂，Notepad++实现自动完成的大概逻辑是什么样的。</para>
+        <para>后来，才大概想明白：</para>
+        <para>因为在Notepad++在安装过程中，有个选项：<xref linkend="npp_choose_auto_complete" /></para>
+        <para>就是指的是自动完成的功能，需要支持哪些类型的文件。</para>
+        <para>此处，应该就是会去安装对应的数据库，然后对于打开的文件，通过文件名后缀（或者文件头的声明等），识别出当前文件的语言，比如c，Python，Docbook等，</para>
+        <para>之后，再根据当前所输入的字符，动态匹配当前语言的自动完成所涉及的数据库，显示出所匹配的函数，以及函数提示等。</para>
+        <para>至此，才清楚，其大概实现逻辑。</para>
+    </tip>
+    
+    <sect2 xml:id="npp_autocomplete_word"><title>Notepad++的单词自动完成</title>
+        <para>之前，是知道了有函数自动完成。不过后来，在折腾Sublime</para>
+        <para><link xl:href="http://www.crifan.com/recommend_a_relative_good_text_editor_sublime_2">【crifan推荐】一款相对不错的文本编辑器：Sublime Text 2</link></para>
+        <para>的过程中，发现其中有个很好用的功能：文件内的，函数，变量等内容的，自动完成。</para>
+        <para>之前不知道这个就个东东叫做，单词自动完成，现在才知道。</para>
+        <para>然后后来也发现了，Notepad++中，有个自动完成：</para>
+        <para>设置(T) &rArr; 首选项... &rArr; 备份 &rArr; 备份与自动完成 &rArr; 自动完成 &rArr; 勾选 "所有输入均启用自动完成","单词自动完成"</para>
+        <para>但是，由于当前所用的6.2.3中的版本的单次自动完成有bug，无法正常显示列表：</para>
+        <para><link xl:href="http://sourceforge.net/p/notepad-plus/bugs/4056/">#4056 Word auto-completion is not working in NP++ 6.1.6 or late</link></para>
+        <para>使得无法使用。</para>
+        <para>但是巧的是，Notepad++最近又发布了6.2.3的版本，修复了此bug，所以，刚去更新了最新6.2.3，然后就可以实现单词的自动完成的效果了：</para>
+        <para>比如某个Python文件内的变量的自动完成：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/word_autocomplete.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/word_autocomplete.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>比如当前文件内部的，汉字都可以自动完成的：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/zhcn_word_autocomplete.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/zhcn_word_autocomplete.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+</sect1>
+
+<sect1 xml:id="npp_func_def_html_viewer"><title>Notepad++的默认HTML查看器</title>
+    <para>前面已经解释过了，在<xref linkend="npp_install_choose_component" />的时候，就有个参数选择，可以把Notepad++设置为默认HTML的查看器的：<xref linkend="npp_install_para_def_html_viewer" /></para>
+    <para>这样，以后用浏览器查看某网页，想要查看其html源码的话，右键点击，选择 View Source：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1235?filename=view%20source.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1235?filename=view%20source.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>就可以用Notepad++来查看HTML源码了：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1236?filename=use%20npp%20see%20html.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1236?filename=use%20npp%20see%20html.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>可以看到，其显示出来的效果，没有HTML高亮，可以自己手动设置一下：</para>
+    <para>语言(L) &rArr; H &rArr; HTML</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1237?filename=choose%20H%20HTML.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1237?filename=choose%20H%20HTML.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>就可以高亮的显示HTML文件了：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1238?filename=html%20highlighted.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1238?filename=html%20highlighted.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>将Notepad++用作为HTML默认编辑器，主要适合于网络相关开发人员。</para>
+</sect1>
+
+<sect1 xml:id="npp_func_show_special_char"><title>Notepad++支持显示回车符，换行符，TAB键，行首，行尾等特殊字符</title>
+    <para>Notepad++默认，也和其他编辑器一样，是不显示空格和TAB键的</para>
+    <para>，不过我最近在用Notepad++写Python脚本过程中，常需要显示空格键和TAB键</para>
+    <para>以避免两者混合缩进，所以去设置了，将空格键和TAB键也显示出来。</para>
+    <para>下面以某HTML源码为例：</para>
+    <para>视图(V) &rArr; 显示符号 &rArr; 显示空格与制表符</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1239?filename=show%20space%20and%20tab.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1239?filename=show%20space%20and%20tab.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>这样，就可以将空格键显示出来了，效果是四个橘黄色的点点，TAB键是右向的橘黄色箭头。</para>
+    <para>就很方便的，很清楚的看到，哪些是空格，哪些是TAB了。</para>
+    <para>另外，可以根据需要，比如想要知道那些行，有回车换行，还是单个的回车，单个的换行等，可以设置将所有的字符都显示出来：</para>
+    <para>视图(V) &rArr; 显示符号 &rArr; 显示所有字符</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1240?filename=show%20all%20char.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1240?filename=show%20all%20char.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>这样全部的回车换行符，CR和LF等，就都可以显示出来了。</para>
+    <example xml:id="eg.npp_show_special_char"><title>Notepad++可以查看特殊字符的用途举例</title>
+        <para>有人也许会问，就算Notepad++能显示所有特殊字符，好像也没啥用啊。</para>
+        <para>那此处就给你举个实际我遇到的例子：</para>
+        <para>之前遇到的一个问题是，用python脚本导出某163博客的帖子为WXR（XML文件）</para>
+        <para>但是结果导入WXR到wordpress失败，最后找到原因是，WXR文件中存在一些控制字符，该WXR文件效果如下：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1241?filename=many%20control%20char.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1241?filename=many%20control%20char.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>其中包含很多DLE，ETX，EOT等控制字符，导致导入WXR到Wordpress失败。</para>
+        <para>而此时，就依靠了Notepad++的所能够查看到字符中的特殊的，不可显示的控制字符，才解决此问题的。</para>
+        <para>如果换做其他普通的编辑器，比如Notepad，则无法显示出对应的控制字符，也就无法找到原因，无法解决问题了。</para>
+        <para>所以，越加发现，Notepad++的功能，真的是太强大了。</para>
+    </example>
+</sect1>
+
+<sect1 xml:id="npp_func_insert_special_char"><title>Notepad++支持插入特殊字符</title>
+    <para>Notepad++不仅可以实现<xref linkend="npp_func_show_special_char" />，还可以实现插入特殊字符。</para>
+    <example xml:id="eg.npp_insert_special_char"><title>Notepad++可以插入特殊字符的用途举例</title>
+        <para>接着<xref linkend="eg.npp_show_special_char" />继续说:</para>
+        <para>后来为了测试WXR中到底支持哪些控制字符</para>
+        <para>是不是所有的0-0x31都不支持，还是也支持一部分的控制字符，</para>
+        <para>这就需要输入这些不可显示的控制字符，用于代码测试。</para>
+        <para>然后才发现，原来Notepad++中，也是可以输入控制字符的：</para>
+        <para>编辑(E) &rArr; Character Panel</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1242?filename=char%20panel.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1242?filename=char%20panel.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>然后就调出了ASCII Insertion Panel，显示了ASCII字符表，包括了控制字符：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1243?filename=ascii%20insertion%20panel.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1243?filename=ascii%20insertion%20panel.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>这样，双击ASCII Insertion Panel中任一（普通或控制）字符，比如DLE，DC1这两个控制字符，就可以插入对应的控制字符了。</para>
+        <para>而其他编辑器，好像没看到有这么好用的功能。</para>
+        <para>因此，不得不夸一句，Notepad++，真的是非常适合用来做文本编辑器，尤其是适合开发人员。</para>
+    </example>
+</sect1>
+
+<sect1 xml:id="npp_func_highlight_selection"><title>Notepad++高亮所选关键字</title>
+    <para>选中某单词即关键字后，notepad++会自动高亮对应选中的关键字：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/highlighted_selected_keyword.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/highlighted_selected_keyword.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>方便查看和编辑文件。</para>
+    <para>此功能虽然简单，但是使用频度蛮高的，也是很实用的功能之一了。</para>
+</sect1>
+
+<sect1 xml:id="npp_func_windows_unix_mac"><title>Notepad++中Windows,Unix,Mac三种格式之间的转换</title>
+    <para>由于历史原因，导致Windows，Unix/Linux，Mac三者之间，对于文件中所用回车换行符，表示的方法，都不一样。</para>
+    <para>这就导致了很多人都会遇到回车换行符的困惑，和需要在不同格式间进行转换。</para>
+    <para>其中，关于回车换行符的详细解释，去看这里<xref linkend="ref.cr_lf_detail_explanation" /></para>
+    <para></para>
+    <para>此处，介绍一下，如何通过Notepad++实现在这三者之间进行转换。</para>
+    
+    <sect2 xml:id="check_cur_newline_mode"><title>查看当前文件格式（换行符用的是什么字符）</title>
+        <para>当前是Windows的平台，所以通过“显示所有字符”：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/goto_show_all_crlf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/goto_show_all_crlf.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>默认所查看到的是Windows的CR LF:</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/showed_all_crlf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/showed_all_crlf.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="windows_to_unix_linux"><title>从Windows转换为Unix/Linux格式</title>
+        <para>然后去从当前的Windows的格式，转换为Unix格式：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/win_to_unix.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/win_to_unix.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>然后Windows的CR LF就都变成Unix/Linux的LF了:</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/unix_mode.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/unix_mode.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="unix_linux_to_mac"><title>从Unix/Linux转换为Mac格式</title>
+        <para>然后再去从当前的Unix/Linux格式，转换为Mac格式：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/unix_to_mac.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/unix_to_mac.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>然后Unix/Linux的LF就都变成了Mac的CR了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/mac_mode.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/mac_mode.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="mac_to_windows"><title>从Mac格式转换为Windows格式</title>
+        <para>然后再去从当前的Mac格式，转换为Windows格式：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/mac_to_win.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/mac_to_win.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>然后Mac的CR就都变成Windows的CR LF了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/back_to_win.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/back_to_win.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+</sect1>
+
+<sect1 xml:id="npp_func_show_matched"><title>Notepad++高亮匹配的键对</title>
+    <para>点击某个关键词后，会自动高亮显示其所匹配的键对：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/hl_matched_pair.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/hl_matched_pair.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>方便查看和编辑文件。</para>
+    <para>此功能很适合对于编辑xml，html等类型的文件，这样容易看清，哪个标签，关键字，所对应的关系。</para>
+    <para>另外，也适合用于查看代码中的，当前的代中括号，方括号，大括号所对应的那个括号在哪里：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/matched_brace.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/matched_brace.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+</sect1>
+
+<sect1 xml:id="npp_func_auto_update"><title>Notepad++文件自动更新</title>
+    <para>之前不了解，关于文件自动更新，原来也是可以根据需要设置不同更新模式的。</para>
+    <para>说个最实际的例子：</para>
+    <para>之前用写python脚本，在windows的cmd中输入脚本去执行，执行过程中，会生成一个log文件：xxx.log，</para>
+    <para>另外每次执行不同的命令，对应的log文件内容也会变化，</para>
+    <para>而该log文件以及对应的python脚本xxx.py文件，我都是用Notepad++打开的，</para>
+    <para>所以，执行完cmd中的python脚本后，想要回来再次去编辑xxx.py文件，就会先遇到，关于xxx.log被更新的提示：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1245?filename=file%20update%20tip.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1245?filename=file%20update%20tip.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>然后点击个yes,才能去编辑我想要编辑的xxx.py文件。</para>
+    <para>所以，每次都被这个提示框所打扰，觉得挺烦的。</para>
+    <para>后来，无意间，发现原来是可以取消此提示的：</para>
+    <para>设置(T) &rArr; 首选项... &rArr; 其他 &rArr; 自动检测文件状态，勾选 "启用", "自动更新文件"</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1246?filename=auto%20update%20file.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1246?filename=auto%20update%20file.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>这样，每次xxx.log文件再被修改，就会自动更新内容，而没有了之前的跳出的那个对话框的提示了。</para>
+    <para>类似的，也可以通过勾选或取消”启用“，实现开启或关闭自动检测文件状态这个功能。</para>
+    <para>或者每次更新完文件，想要光标自动跳到文件末尾，那么就去选上"更新后定位到末位"。</para>
+</sect1>
+
+<sect1 xml:id="npp_func_space_replace_tab"><title>Notepad++设置用空格取代TAB键</title>
+    <para>设置(T) &rArr; 首选项... &rArr; 语言 &rArr; 标签设置，勾选 "以空格取代"</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1244?filename=replace%20tab%20with%20space.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://storage.live.com/items/9A8B8BF501A38A36!1244?filename=replace%20tab%20with%20space.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>这样，以后输入Tab键的时候就会自动以所设置的4个空格代替。</para>
+    <para>此功能的用途：</para>
+    <orderedlist>
+        <listitem>部分程序的需要
+            <para>主要是有些情况下，比如写Python脚本的时候用到，以避免TAB键和空格键的混合缩进，其会导致Python 3.0等报错，而让输入的TAB键，自动变成空格键，则自动规避了此问题。</para>
+        </listitem>
+        <listitem>兼容不同平台
+            <para>另外，此功能，也是出于兼容不同平台，TAB键的宽度不同的考虑</para>
+            <para>这样就可以避免不同平台下，不会因为TAB键是4个空格，还是2个空格等，而导致代码（文字）的对齐不匹配的现象了。</para>
+        </listitem>
+    </orderedlist>
+</sect1>
+
+<sect1 xml:id="npp_func_add_comment"><title>Notepad++给代码单行/批量，添加/取消注释</title>
+    <para>编辑(E) &rArr; 注释/取消注释 &rArr; 添加删除/单行注释 Ctrl+Q</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2764084271315805582.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2764084271315805582.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>就可以实现对选中的多行Python代码，每行都添加对应的符号"#"，实现对应的注释代码的功能了。</para>
+    <tip>
+        <para>此功能，不仅方便一次性可以注释多行代码。更加强大的是，会根据不同的语言的代码，添加对应的注释前缀。</para>
+        <para>比如，Python语言，以井号"#"为前缀，表示注释，而c等语言，是以斜杠"/"为前缀，表示注释，而xml语言中，是以&lt;!-- xxx --&gt;表示对xxx进行注释，其都可以根据所识别出来的源码的类型，去添加相应的注释。</para>
+        <para>下面就是通过区块注释，实现对xml代码实现给一段代码，添加区块注释功能的：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/block_comments.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/block_comments.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>添加注释后的效果：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/added_block_comment.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/added_block_comment.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </tip>
+</sect1>
+
+<sect1 xml:id="npp_func_multi_themes"><title>Notepad++的多主题</title>
+    <para>在前面的安装过程中：<xref linkend="npp_install_para_themes" />，已经介绍了其会安装一些主题。</para>
+    <para>此处，可以去：设置(T) &rArr; 语言格式设置...</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/set_lan_format_setting.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/set_lan_format_setting.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>中，在“选择主题”部分，去设置不同的主题。</para>
+    <para>下面就来看看不同主题的效果如何：</para>
+
+    <sect2 xml:id="npp_theme_default"><title>Notepad++主题: Default</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_default.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_default.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_bespin"><title>Notepad++主题: Bespin</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_bespin.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_bespin.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_black_board"><title>Notepad++主题: Black Board</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_black_board.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_black_board.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_choco"><title>Notepad++主题: Choco</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_choco.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_choco.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_zeburn"><title>Notepad++主题: Zenburn</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_zenburn.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_zenburn.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_deep_black"><title>Notepad++主题: Deep Black</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_deep_black.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_deep_black.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_hello_kitty"><title>Notepad++主题: Hello Kitty</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_hello_kitty.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_hello_kitty.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_mono_industrial"><title>Notepad++主题: Mono Industrial</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_mono_industrial.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_mono_industrial.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_monokai"><title>Notepad++主题: Monokai</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_monokai.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_monokai.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_obsidian"><title>Notepad++主题: Obsidian</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_obsidian.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_obsidian.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_plastic_code_wrap"><title>Notepad++主题: Plastic Code Wrap</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_plastic_code_wrap.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_plastic_code_wrap.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_ruby_blue"><title>Notepad++主题: Ruby Blue</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_ruby_blue.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_ruby_blue.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_solarized_light"><title>Notepad++主题: Solarized-Light</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_solarized_light.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_solarized_light.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_solarized"><title>Notepad++主题: Solarized</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_solarized.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_solarized.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_twilight"><title>Notepad++主题: Twilight</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_twilight.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_twilight.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_vibrant_ink"><title>Notepad++主题: Vibrant Ink</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_vibrant_ink.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_vibrant_ink.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+    <sect2 xml:id="npp_theme_vim_dark_blue"><title>Notepad++主题: Vim Dark Blue</title>
+        <para></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/style_vim_dark_blue.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/style_vim_dark_blue.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para></para>
+    </sect2>
+
+</sect1>
+
+<sect1 xml:id="npp_func_misc"><title>Notepad++的一些小功能</title>
+    <para>其他还有很多功能，由于个人觉得不是那么的重要，所以此处暂称其为小功能。</para>
+    <para>虽然此处称为小功能，但是真正等你需要用到的时候，也会发现，真的很贴心，很好用。</para>
+
+    <sect2 xml:id="npp_tab_close"><title>支持双击Tab标签关闭文件</title>
+        <para>想要快速关闭某个文件，可以通过双击该文件的Tab：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/double_click_tab.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/double_click_tab.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <note>
+            <para>不过需要注意的是，默认是关闭了此功能的，需要的话，去开启此功能：</para>
+            <para>设置(T) &rArr; 首选项... &rArr; 常用 &rArr; 标签栏 &rArr; 勾选 "双击关闭标签"</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/setting_double_click_tab.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/setting_double_click_tab.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </note>
+    </sect2>
+    
+    <sect2 xml:id="npp_show_line_number"><title>显示文件行号</title>
+        <para>设置(T) &rArr; 首选项... &rArr; 编辑 &rArr; 勾选 "显示行号栏"</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/show_line_number.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/show_line_number.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>这样，就可以显示行号了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/showed_file_line_number.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/showed_file_line_number.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="npp_print_line_number"><title>支持是否打印行号</title>
+        <para>设置(T) &rArr; 首选项... &rArr; 打印 &rArr; 勾选 "打印行号"</para>
+        <para>这样，再去：文件 &rArr; 打印</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/file_print.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/file_print.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>选择一个pdf打印机(BullZip PDF Printer)，然后打印：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/choose_pdf_printer.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/choose_pdf_printer.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>输出的pdf中，就包括了行号了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/printed_line_in_pdf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/printed_line_in_pdf.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <tip>关于pdf打印机，不了解的可参考：<xref linkend="ref.bullzip_pdf_printer" /></tip>
+    </sect2>
+    
+    <sect2 xml:id="npp_backup"><title>编辑文件后，是否备份</title>
+        <para>和Ultra Editor类似，Notepad++在编辑一个文件后，默认会生成.bak文件的。</para>
+        <para>不过对于notepad++来说，此功能默认是关闭的。需要的话可以去开启：</para>
+        <para>设置(T) &rArr; 首选项... &rArr; 备份 &rArr; 备份与自动完成 &rArr; 勾选 "简单备份"</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/backup_simple.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/backup_simple.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>可见，另外还有禁止和复杂备份，可根据自己的实际情况而设置。</para>
+    </sect2>
+    
+    <sect2 xml:id="npp_google_search"><title>调用搜索引擎搜索选定文字</title>
+        <para>选择一段文字后，然后：运行(R) &rArr; Google Search Alt+F2</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/search_selected.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/search_selected.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>就会调用google去搜索选定文字了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/call_google_search.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/call_google_search.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>与google search的，还有类似的：</para>
+        <itemizedlist>
+            <listitem>Get php help Alt+F1: 调用php帮助，对查找php函数等有帮助</listitem>
+            <listitem>Wikipedia Search :调用维基百科搜索选定文字</listitem>
+        </itemizedlist>
+        <para>在同一界面的其他功能有：</para>
+        <itemizedlist>
+            <listitem>Open current dir cmd: 打开cmd且定位到当前文件夹，功能等价于：<xref linkend="ref.right_menu_run_cmd" /></listitem>
+            <listitem>Open cotaining folder: 打开当前文件所在文件夹</listitem>
+        </itemizedlist>
+        
+        <sect3 xml:id="custom_google_search_shorcut"><title>更改google搜索功能的快捷键</title>
+            <para>如果想要改变这些Alt+F2之类的快捷键，Notepad++也是支持的：</para>
+            <para>设置(T) &rArr; 管理快捷键...</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/set_manage_shortcut.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/set_manage_shortcut.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>Run Commands下面，可以修改快捷键：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/can_change_search_shortcut.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/can_change_search_shortcut.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+    
+    <sect2 xml:id="npp_hide_line"><title>暂时隐藏某些行</title>
+        <para>如果在查看文件的时候，暂时觉得需要将某些行隐藏掉，在需要的时候再正常显示，就可以先选中那些行，然后：</para>
+        <para>视图(V) &rArr; 隐藏行 Alt+H</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/hide_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/hide_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>就可以实现暂时隐藏对应的行了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/hided_single_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/hided_single_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>很明显，点击对应的蓝色三角型，就又可以恢复显示该行了。</para>
+    </sect2>
+    
+    <sect2 xml:id="npp_mouse_scale"><title>支持鼠标滚轮控制缩放</title>
+        <para>Notepad++不仅支持快捷键Ctrl + Num+/Num- 去控制放大/缩小，而且还支持Ctrl+鼠标滚轮去控制当前显示内容的缩放，很是方便。</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/scale_large_small.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/scale_large_small.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="npp_full_screen"><title>全屏显示</title>
+        <para>有时候显示文档的话，希望显示更多的内容，希望用到全屏显示，通过：视图(V) &rArr; 全屏显示 F11</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/full_screen.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/full_screen.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>实现全屏缩放。想要返回正常查看模式，点击右上角的加号<inlinemediaobject><mediaobject><imagedata href="images/function/f11_return_normal.png" /></mediaobject></inlinemediaobject>，即可。</para>
+    </sect2>
+    
+    <sect2 xml:id="npp_ctrl_tab_switch"><title>Ctrl+Tab实现在多个打开的窗口间切换</title>
+        <para>通过快捷键Ctrl+Tab，就可以实现在打开的多个文件中，来回切换：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/ctrl_tab_switch.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/ctrl_tab_switch.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="npp_colomn_border"><title>支持设置是否显示列边界（右边线）</title>
+        <para>设置(T) &rArr; 首选项... &rArr; 编辑 &rArr; 列边界设置 &rArr; 勾选 "显示列边界"和"边界线模式"</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/col_border_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/col_border_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>此时，文件中，宽度100的位置，就会有对应的一条竖线提示：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/function/show_col_width_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/function/show_col_width_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>这样，如果代码是否超过便捷，就很容易看清了。</para>
+
+        <tip><title>列边界功能的由来</title>
+            <para>此功能的出现，主要是由于对于写代码的人，一个良好的习惯是，不要让代码太长。</para>
+            <para>一般的列宽限制，都定位80个字符。</para>
+            <para>超过的部分的代码，应该养成好习惯，以多行显示。</para>
+        </tip>
+        
+        <para>可以看到，另一种配置是把超过列边界的内容加上一定的底色，效果如下：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/1081708335516198029.jpg" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/1081708335516198029.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="npp_text_align_right"><title>文字显示：右对齐和左对齐</title>
+        <para>如果需要的话，可以设置文字右对齐。</para>
+        
+        <sect3 xml:id="set_align_right"><title>如何设置文字右对齐</title>
+            <para>默认的快捷键是：<shortcut>Ctrl+Alt+R</shortcut></para>
+            <para>设置(T) &rArr; 管理快捷键... &rArr; Menu &rArr; 文字方向从右向左</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/settings_manage_shortcut.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/settings_manage_shortcut.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/main_menu_text_from_right_to_left.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/main_menu_text_from_right_to_left.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>想要取消右对齐，可以使用快捷键<shortcut>Ctrl+Alt+L</shortcut>，就可以恢复到默认的左对齐了。</para>
+        </sect3>
+
+        <sect3 xml:id="align_right_effet"><title>文字右对齐的效果</title>
+            <para>原先默认左对齐的是这样的：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/align_left_origin.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/align_left_origin.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>改为右对齐后，效果是：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/align_right_effect.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/align_right_effect.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+
+    <sect2 xml:id="npp_format"><title>格式化（成漂亮的输出效果）</title>
+        <para>用Notepad++自带的功能，和其他第三方的插件，可以实现，针对不同的格式的文件的格式化，下面依次分别介绍：</para>
+        <sect3 xml:id="npp_format_xml"><title>用Notepad++格式化XML</title>
+            <para>有个插件叫做XML Tools</para>
+            <para>里面有个功能就是用来格式化输出XML的</para>
+            <para>Pretty print(XML only - with line breaks)     Ctrl+Alt+Shift+B</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/pretty_print_xml_only_with_line_breaks.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/pretty_print_xml_only_with_line_breaks.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+
+    <sect2 xml:id="npp_ctrl_d"><title>Ctrl+D拷贝单行或多行</title>
+        <para>Notepad++中，支持拷贝单行或选中的多行的功能</para>
+        <para>对应的快捷键是：<command>Ctrl+D</command></para>
+        <para>之前，想要复制某一行，或某几行的话，都是：</para>
+        <para>用鼠标选中某行或某几行，然后<command>Ctrl+C</command></para>
+        <para>然后光标再点击到下一行的行首，或者是多行的后面，</para>
+        <para>再去用<command>Ctrl+V</command>去粘贴</para>
+        <para>而后来，发现了Notepad++中，有个<command>Ctrl+D</command>的快捷键，</para>
+        <para>可以更加方便的实现同样的效果：</para>
+        <sect3 xml:id="copy_current_line"><title>直接复制光标所在的当前行的内容</title>
+            <para><command>Ctrl+D</command>支持：</para>
+            <para>对于你当前所在的行，直接去用<command>Ctrl+D</command></para>
+            <para>然后就可以复制出当前行的内容</para>
+            <para>比如，就在此刻，写docbook的xml源码时，对于：</para>
+            <screen><![CDATA[<para></para>]]></screen>
+            <para>鼠标放在中间：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/cursor_in_current_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/cursor_in_current_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>然后按<command>Ctrl+D</command>，就可以直接再复制出当前行了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/copy_out_next_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/copy_out_next_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>如此，一下子，想要多复制个10行8行的，多按几次<command>Ctrl+C</command>就可以了。</para>
+            <para>就免去了之前繁琐的：赋值，移动光标，粘贴，的复杂操作了。</para>
+        </sect3>
+        <sect3 xml:id="copy_selected_content"><title>复制选中的部分文字，多行内容等内容</title>
+            <para><command>Ctrl+D</command>也支持，对于选择的内容，去复制出来的效果。</para>
+            <para>选择的内容，可以是部分文字，也可以是多行内容</para>
+            <para>比如，之前写docbook的xml时，想要基于当前的一个sect1的内容</para>
+            <para>复制一份出来，然后再去修改为想要的，第二个sect1的相关内容。</para>
+            <para>此时，就可以通过，选中整体的sect1的多行的内容</para>
+            <para>然后去按一次<command>Ctrl+D</command>，就可以达到想要的效果了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/function/ctrl_d_can_copy_whole_sect1_content.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/function/ctrl_d_can_copy_whole_sect1_content.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>如此，高效的实现了，多行的复制。</para>
+        </sect3>
+    </sect2>
+</sect1>
+
+</chapter>

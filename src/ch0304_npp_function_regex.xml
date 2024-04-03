@@ -1,0 +1,577 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<!DOCTYPE sect1
+[
+
+<!ENTITY % crl_ent PUBLIC "crl.ent" 'http://www.crifan.com/files/res/docbook/entity/crl.ent'>
+%crl_ent;
+]>
+
+<sect1 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    
+    xml:id="npp_func_regex_replace">
+<title>Notepad++的正则表达式替换和替换</title>
+
+<para>下面就来详细介绍Notepad++中关于正则表达式的部分，主要是查找和替换。</para>
+<para>对于替换功能，一般的文本编辑器，都具有此功能，但是对于高级的正则表达式替换，则很多都不支持。而此处Notepad++支持此功能。</para>
+<para>正则表达式的替换，在很长一段时间内，我都没有用到过。而后来有此需求的时候，由于不熟悉，导致也没去折腾具体如何使用的。</para>
+<para>后来有空去弄了下，终于搞懂了。对此类功能不了解的人，会没啥感觉，但是看了下面的介绍，你就会发现这类功能的强大之处。</para>
+
+<example xml:id="eg.npp_reg_rep_multi_suffix"><title>Notepad++正则表达式替换举例：一次性替换多个文件的后缀</title>
+    <para>举例说明，此处我有个xml文件，其中原始的内容为：</para>
+    <screen>
+<![CDATA[
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/env_var/win/right_click_then_property.jpg" align="left" scalefit="0" width="100%"/></imageobject>
+        <imageobject role="fo"><imagedata fileref="images/env_var/win/right_click_then_property.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+......
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/env_var/win/advance_enviroment.jpg" align="left" scalefit="0" width="100%"/></imageobject>
+        <imageobject role="fo"><imagedata fileref="images/env_var/win/advance_enviroment.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+]]>
+    </screen>
+    <para>其中images/env_var/win/xxx.jpg出现的次数，有好几十处。</para>
+    <para>此处需要把images/env_var/win/xxx.jpg，全部替换为images/env_var/win/xxx.png，即替换文件的后缀。</para>
+    <para>但是呢，如果手动改的话，改动量很大，效率很低，所以要尽量避免手动改。</para>
+    <para>另外，此处也不能通过全局的那个替换功能，因为全局替换只适用于固定的文字xxx替换为yyy，而此处文件名都不一样，所以无法实现统一的替换。</para>
+    <para>此时，才会考虑用Notepad++的正则表达式替换，去实现复杂的，非规则性的替换功能。</para>
+    <para>而对于正则表达式的替换，最开始，由于不了解其语法，错写成：</para>
+    <para>查找目标 :<screen>images/env_var/win/\w+\.jpg</screen></para>
+    <para>替换为(P):<screen>images/env_var/win/\w+\.png</screen></para>
+    <para>则替换结果是错的，原来的文件名都被替换为w+这两个字符了：</para>
+    <screen>
+<![CDATA[
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/env_var/win/w+.png" align="left" scalefit="0" width="100%"/></imageobject>
+        <imageobject role="fo"><imagedata fileref="images/env_var/win/w+.png" align="center" scalefit="1" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+......
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/env_var/win/w+.png" align="left" scalefit="0" width="100%"/></imageobject>
+        <imageobject role="fo"><imagedata fileref="images/env_var/win/w+.png" align="center" scalefit="1" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+]]>
+    </screen>
+    <para>后来，参考了<xref linkend="ref.npp_back_ref" /></para>
+    <para>然后得知是用反斜杠，加上数字，实现向后引用（back reference）。</para>
+    <tip><title>Notepad++的正则表达式的语法</title>
+        <para>不过后来也找到了其他更专业和全面的解释：<xref linkend="ref.how_use_regex_in_npp" /></para>
+        <blockquote>
+            <para>\digit
+                <para>Backreference:</para>
+                <para> \1 matches an additional occurence of a text matched by an earlier part of the regex. Example: This regular expression: ([Cc][Aa][Ss][Ee]).*\1 would match a line such as Case matches Case but not Case doesn't match cASE. A regex can have multiple subgroups, so \2, \3, etc can be used to match others (numbers advance left to right with the opening parenthesis of the group). So \n is a synonym for \gn, but doesn't support the extension syntax for the latter. </para>
+            </para>
+        </blockquote>
+    </tip>
+    <note>
+        <para>之前就知道Notepad++底层是使用SciTE的库的，也顺便找到了SciTE的关于正则表达式的解释<xref linkend="ref.regex_scite" /></para>
+        <para>不过其中关于backreference的解释很不清楚。</para>
+    </note>
+    <para>最后写出正确的语法：</para>
+    <para>查找目标 :<screen>images/env_var/win/(\w+)\.jpg</screen></para>
+    <para>替换为(P):<screen>images/env_var/win/\1\.png</screen></para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/replace_regex_back_ref.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/replace_regex_back_ref.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>可以成功替换为：</para>
+    <screen>
+<![CDATA[
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/env_var/win/right_click_then_property.png" align="left" scalefit="0" width="100%"/></imageobject>
+        <imageobject role="fo"><imagedata fileref="images/env_var/win/right_click_then_property.png" align="center" scalefit="1" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+......
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/env_var/win/advance_enviroment.png" align="left" scalefit="0" width="100%"/></imageobject>
+        <imageobject role="fo"><imagedata fileref="images/env_var/win/advance_enviroment.png" align="center" scalefit="1" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+]]>
+    </screen>
+    <para>如此，如果有类似需要，想要实现批量的，非规则性的替换，就可以好好利用Notepad++中的正则表达式去替换了。</para>
+</example>
+
+<example xml:id="eg.npp_reg_rep_multi_path"><title>Notepad++正则表达式替换举例：一次性替换多个路径</title>
+    <para>又比如，由于我把很多jpg，png等类型的图片，从images文件夹移动到了images下面的npp文件夹下了，</para>
+    <para>所以需要把一个文件中所有的：</para>
+    <para>images/xxx.yyy</para>
+    <para>其中xxx为文件名（此处文件名全部都是只包含字母和下划线），yyy=jpg或png，都替换为</para>
+    <para>images/npp/xxx.yyy</para>
+    <para>此时，就可以写成：</para>
+    <para>images/(\w+)\.(\w{3})</para>
+    <para>images/npp/\1\.\2</para>
+    <para>此处提示我成功替换了58处：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/replace_58_places.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/replace_58_places.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>相比之下，如果手动去改这58个地方，那真的是累死了不说，还容易由于手误而出错，效率太低。</para>
+    <para>通过正则表达式去替换，则是高效，又准确。</para>
+</example>
+
+<example xml:id="eg.npp_reg_rep_listitem_sect4"><title>Notepad++正则表达式替换举例：一次性替换多个listitem为sect4</title>
+    <para>又比如，在docbook中，想要把原先的listitem部分的内容，都替换为sect4:</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_replace_listitem.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_replace_listitem.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>并且也注意到，其中除了上层的listitem，其内部还有一些特殊的子listitem：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/special_sub_listitem.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/special_sub_listitem.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>需要在替换的时候，考虑到此点，不要将子listitem也替换掉了。</para>
+    <para>然后就是去想办法，写对应的正则表达式。</para>
+    <para>此时，注意到每个要替换的listitem的标题部分之后，是有回车和换行的，所以参考<xref linkend="npp_func_show_special_char" />去"显示所有字符"：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/listitem_show_all_crlf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/listitem_show_all_crlf.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>这样就清楚，到底包含哪些字符，方便我们接下来去写正则表达式了。</para>
+    <para></para>
+    <para>经过折腾，用如下的正则表达式：</para>
+    <screen>
+<![CDATA[
+<listitem>(.+?)\r\n(.+?)\r\n\s+</listitem>\r\n
+]]>
+    </screen>
+    <screen>
+<![CDATA[
+<sect4 xml:id="npp_"><title>\1</title>\r\n\2\r\n        </sect4>\r\n
+]]>
+    </screen>
+    <para>将原先内容：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/sel_and_before_replace.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/sel_and_before_replace.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/10_listitem_rep_ok.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/10_listitem_rep_ok.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>可以看到，成功替换了10个。</para>
+    <para>对应的，也可以看到，对于那些特殊的子listitem来说，也没有被替换掉：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/special_sub_listitem_not_replace.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/special_sub_listitem_not_replace.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>如此，就可以避免了手动的去一点点的修改了。</para>
+</example>
+
+<example xml:id="eg.npp_reg_add_pref"><title>Notepad++正则表达式替换举例：给每一行都添加AddIcon的前缀</title>
+    <para>需要把每一行中的文件类型的图片名，替换成加上前缀和后缀。</para>
+    <para>然后就可以去写正则表达式了：</para>
+    <para>(\w+)\.png\s+\r\n</para>
+    <para>AddIcon http://www\.crifan\.com/files/res/apache/icons/20x22/\1\.png \.\1\r\n</para>
+    <para>就可以从：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/rep_regex_add_prex_before.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/rep_regex_add_prex_before.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/rep_regex_add_prex_after.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/rep_regex_add_prex_after.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>所以，如果能利用到此种功能，还是可以很大地提高工作效率的。</para>
+</example>
+
+<example xml:id="eg.npp_reg_rep_book_tit_addr"><title>Notepad++正则表达式替换举例：给book的标题和地址添加html代码</title>
+    <para>又比如，对于原先是这样的代码：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/rep_before_book_tit_addr.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/rep_before_book_tit_addr.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>即，有很多组，每组分别是标题和地址。</para>
+    <para>而想要做的事情是，把对应的标题和地址，以及其中缩写，都提取出来，并且添加相关的html代码。</para>
+    <para>最后经过参考：<xref linkend="ref.how_use_regex_in_npp" /></para>
+    <para>而写出了相应的正则表达式：</para>
+    <screen>
+<![CDATA[
+(?<bookTitle>.+?)\r\n(?<wholeUrl>http://www\.crifan\.com/files/doc/docbook/(?<bookAbbrv>\w+)/release/html/(?&bookAbbrv)\.html)
+]]>
+    </screen>
+    <screen>
+<![CDATA[
+<tr><td><a href="$+{wholeUrl}">$+{bookTitle}</a></td><td><a href="http://www.crifan.com/bbs/categories/$+{bookAbbrv}">$+{bookTitle}</td></tr>
+]]>
+    </screen>
+    <para>然后就可以成功实现28处的替换，替换出来的效果为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/rep_after_book_tit_addr.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/rep_after_book_tit_addr.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换后的html代码，再添加上相应的html代码：头部的：</para>
+    <screen>
+<![CDATA[
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr><td><strong>单个Book</strong></td><td><strong>对应的讨论区</strong></td></tr>
+]]>
+    </screen>
+    <para>和尾部的：</para>
+    <screen>
+<![CDATA[
+</tbody>
+</table>
+]]>
+    </screen>
+    <para>最终就可以实现需要显示出来的完整的表格信息了：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/book_tit_addr_effect.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/book_tit_addr_effect.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>则又一次地，极大地提高了工作效率。否则要一个个的复制和粘贴，累死了不说，也还容易出错。</para>
+</example>
+
+<example xml:id="eg.npp_reg_find_single_cr_lf"><title>Notepad++正则表达式替换举例：查找单个的CR或LF</title>
+    <para>后来一次，遇到一个需求是：对于单个文件中，查找所谓的不一致的换行符</para>
+    <para>去看了一下当前文件中，正常都是Windows类型的回车换行，CRLF</para>
+    <para>想要找到哪里出现了单个的CR或LF</para>
+    <para>而由于文件有很多行，里面有N个CRLF，而要一眼看出哪里有单个的CR或LF，很困难，或者说不可能，所以只能靠正则表达式去搜索寻找了</para>
+    <para>然后最终使用正则表达式是：</para>
+    <screen><![CDATA[\r(?!\n)|(?<!\r)\n]]></screen>
+    <para>然后找到了对应的2处，单个的CR或者LF：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/regex_found_single_cr_lf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/regex_found_single_cr_lf.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>此处，顺便简单解释一下此处的正则表达式的含义：</para>
+    <itemizedlist>
+        <listitem>具体的语法，还是去参考这个最全的语法：<xref linkend="ref.how_use_regex_in_npp" /></listitem>
+        <listitem>关于CR LF不清楚的，还是先去看：<xref linkend="ref.cr_lf_detail_explanation" /></listitem>
+        <listitem>此处的<screen><![CDATA[\r(?!\n)|(?<!\r)\n]]></screen>是xxx|yyy的格式，表示匹配xxx或yyy</listitem>
+        <listitem>其中xxx是<screen><![CDATA[\r(?!\n)]]></screen>，yyy是<screen><![CDATA[(?<!\r)\n]]></screen></listitem>
+        <listitem>其中\r和\n，分别表示回车CR，换行LF</listitem>
+        <listitem>而<screen><![CDATA[\r(?!\n)]]></screen>用于匹配一个\r，但是后面不是\n</listitem>
+        <listitem>而<screen><![CDATA[(?<!\r)\n]]></screen>用于匹配一个\n，但是前面不是\r</listitem>
+    </itemizedlist>
+</example>
+
+<example xml:id="eg.npp_reg_remove_href"><title>Notepad++正则表达式替换举例：去除href链接</title>
+    <para>遇到一个问题是，想要把一个表格中的内容，粘贴到WLW中，结果由于其中N个内容，都包含了对应的链接，想要把链接去掉。</para>
+    <para>所以就去切换到源码模式，然后把html代码拷贝出来，然后用Notepad++去替换</para>
+    <para>所用正则是：</para>
+    <para><screen><![CDATA[<p><a href="http://.+?/gpu\.php.+?">(<b>.+?</b>)</a></p>]]></screen></para>
+    <para><screen><![CDATA[<p>\1</p>]]></screen></para>
+    <para>替换前是：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/regex_remove_href_before.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/regex_remove_href_before.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换后，变成这样的：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/regex_remove_href_1418_replaced.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/regex_remove_href_1418_replaced.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>效率不是一般的高。</para>
+</example>
+
+<example xml:id="eg.npp_reg_convert_link"><title>Notepad++正则表达式替换举例：把标题和地址转换为link格式</title>
+    <para>遇到一个问题是，想要把对应的，帖子的标题和地址，变成docbook中的link格式，一般拷贝到Docbook的xml中直接使用，就省的自己一点点复制粘贴和修改了。</para>
+    <para>所用Notepad++的正则替换的如下：</para>
+    <para><screen><![CDATA[([\S ]+)\s+(http://www\.crifan\.com/\w+)]]></screen></para>
+    <para><screen><![CDATA[<para><link xl:href="\2">\1</link></para>]]></screen></para>
+    <para>替换前是：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_convert_to_link.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_convert_to_link.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换后，变成这样的：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_convert_to_link.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_convert_to_link.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+</example>
+
+<example xml:id="eg.npp_reg_id_add_quote"><title>Notepad++正则表达式替换举例：给关键字添加双引号，把逗号变成竖杠</title>
+    <para>想要把:</para>
+    <para>XXX, </para>
+    <para>变为:</para>
+    <para>'XXX'| </para>
+    <para>所用Notepad++的正则替换表达式是：</para>
+    <para><screen><![CDATA[([A-Z\_]+),?\s*]]></screen></para>
+    <para><screen><![CDATA['\1'| ]]></screen></para>
+    <para>替换前：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_sub_id_with_comma.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_sub_id_with_comma.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换后：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_sub_id_quote_vertical_line.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_sub_id_quote_vertical_line.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+</example>
+
+<example xml:id="eg.npp_reg_wlw_pic_crlf"><title>Notepad++正则表达式替换举例：wlw中图片分行</title>
+    <para>背景是，wlw编辑帖子，一次性导入70多个多个图片后，如果直接发布，则会导致图片之间没有换行，会横向接着排列，不好看。</para>
+    <para>想要在每两个图片之间，加上回车换行，即，对应的，对于html来说，是从：</para>
+    <screen>
+<![CDATA[
+<a href="$astronomy_dispel_trouble_20[2].jpg"><img title="astronomy_dispel_trouble_20" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="astronomy_dispel_trouble_20" src="$astronomy_dispel_trouble_20_thumb.jpg" width="960" height="720" /></a>
+]]>
+    </screen>
+    <para>变成：</para>
+    <screen>
+<![CDATA[
+<p><a href="$astronomy_dispel_trouble_20[2].jpg"><img title="astronomy_dispel_trouble_20" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="astronomy_dispel_trouble_20" src="$astronomy_dispel_trouble_20_thumb.jpg" width="960" height="720" /></a></p>
+]]>
+    </screen>
+    <para>而此转换，如果用手工去做，就只能在wlw中，手动输入回车换行，则至少需要按50多次的左右键加上回车，很是繁琐。</para>
+    <para>所以，就可以在wlw中，切换到源码，然后将html拷贝出来粘贴到notepad++中，利用notepad++中的正则，实现对应的替换。</para>
+    <para>对应的用的Notepad++的正则如下：</para>
+    <para><screen><![CDATA[(<a[^<>]+?><img[^<>]+?/></a>)]]></screen></para>
+    <para><screen><![CDATA[<p>\1</p>\r\n]]></screen></para>
+    <para>从：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_wlw_pic_crlf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_wlw_pic_crlf.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_wlw_pic_crlf.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_wlw_pic_crlf.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>如此，高效的解决了问题。</para>
+</example>
+
+<example xml:id="eg.npp_reg_sect2_add_xml_id_title"><title>Notepad++正则表达式替换举例：给sect2添加xml:id和title</title>
+    <para>背景是，为crosstool_ng写docbook的xml，然后想要对于之前的itemizedlist，改为sect2，已经手动替换itemizedlist为sect2了。</para>
+    <para>剩下的，还需要给sect2添加对应的xml:id和title，所以，就去Notepad++中写替换的正则</para>
+    <para><screen><![CDATA[<sect2>(.+)$]]></screen></para>
+    <para><screen><![CDATA[<sect2 xml:id=""><title>\1</title>]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_add_sect2_with_xml_id_and_title.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_add_sect2_with_xml_id_and_title.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_add_sect2_with_xml_id_and_title.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_add_sect2_with_xml_id_and_title.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>如此，省去了几十次的，手动输入xml:id和title，以及复制和粘贴的繁琐工作。</para>
+    <para>简直就是一秒变格格的节奏啊，^_^</para>
+</example>
+
+<example xml:id="eg.npp_reg_retain_sect2_title_add_xml_id"><title>Notepad++正则表达式替换举例：保持sect2和title添加xml:id</title>
+    <para>在写Python教程的book的xml时，需要编辑对应的xml，涉及到处理sect2：</para>
+    <para>用正则：</para>
+    <para><screen><![CDATA[<sect1><title>([^:]+:\s*)([a-zA-Z]+)</title>]]></screen></para>
+    <para><screen><![CDATA[<sect1 xml:id="\2"><title>\1\2</title>]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_add_xml_id_retain_sect2_title.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_add_xml_id_retain_sect2_title.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_add_xml_id_retain_sect2_title.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_add_xml_id_retain_sect2_title.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>又省去很多复杂的手动的复制粘贴的体力活了。</para>
+</example>
+
+<example xml:id="eg.npp_reg_remove_single_quote_to_antlr_token"><title>Notepad++正则表达式替换举例：去除单引号变成antlr的token</title>
+    <para>在折腾antlr的grammar时，将原先rule中有的literal都处理为token，所以去把部分单引号，都去掉，变成对应的token：</para>
+    <para>用正则：</para>
+    <para><screen><![CDATA['(\w+)']]></screen></para>
+    <para><screen><![CDATA[\1]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_remove_id_quote.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_remove_id_quote.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_remove_id_quote.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_remove_id_quote.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>不用自己手动的去除对应的单引号了。</para>
+</example>
+
+<example xml:id="eg.npp_reg_change_single_quote_id_to_antlr_token_definition"><title>Notepad++正则表达式替换举例：将单引号加ID变成antlr的token的定义</title>
+    <para>在折腾antlr的grammar时，将原先单引号加上id的写法，直接变成对应的token的定义，并且加上对应的换行：</para>
+    <para>用正则：</para>
+    <para><screen><![CDATA['(\w+)'\s*\|?\s*]]></screen></para>
+    <para><screen><![CDATA[\1\t:\t'\1';\r\n]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_quote_id_to_antlr_token_definition.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_quote_id_to_antlr_token_definition.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_quote_id_to_antlr_token_definition.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_quote_id_to_antlr_token_definition.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>很明显，还是很帅的，一次性搞定去除引号，加上对应的token的定义，再加上对应的回车换行。</para>
+    <para>正则，就是高效率啊。</para>
+</example>
+
+<example xml:id="eg.npp_reg_dd_macro_remove_multi_lan_str"><title>Notepad++正则表达式替换举例：dd宏定义中去除多国语言字符串</title>
+    <para>在折腾HART的EDDL文件时，将宏定义中多国语言字符串去除掉：</para>
+    <para>用正则：</para>
+    <para><screen><![CDATA[("[^"]+")\s*"\|\w{2}\|""[^"]+"]]></screen></para>
+    <para><screen><![CDATA[\1]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_remove_dd_macro_multi_lan_str.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_remove_dd_macro_multi_lan_str.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_remove_dd_macro_multi_lan_str.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_remove_dd_macro_multi_lan_str.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>如此，省去了，一点点选择和删除对应的内容了。</para>
+</example>
+
+<example xml:id="eg.npp_reg_c_macro_to_java_var"><title>Notepad++正则表达式替换举例：C宏定义转java变量定义</title>
+    <para>在折腾</para>
+    <para><link xl:href="http://www.crifan.com/add_rts_and_dtr_support_for_silicon_labs_cp2102_in_usb_serial_for_android/">【记录】给usb-serial-for-android中的Silicon Labs的CP2102中添加RTS和DTR的支持</link></para>
+    <para>时，将C语言中的宏定义，转换为对应的Java中的变量定义：</para>
+    <para>用正则：</para>
+    <para><screen><![CDATA[#define\s+(\w+)\s+(0x\d+)]]></screen></para>
+    <para><screen><![CDATA[private static final int \1 = \2;]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_c_macro_to_java_var_def.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_c_macro_to_java_var_def.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_c_macro_to_java_var_def.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_c_macro_to_java_var_def.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>很是方便好用，不用自己一点点改代码了。</para>
+</example>
+
+<example xml:id="eg.npp_reg_docbook_link_to_bibliomixed"><title>Notepad++正则表达式替换举例：docbook的link变bibliomixed</title>
+    <para>在写</para>
+    <para><link xl:href="http://www.crifan.com/files/doc/docbook/antlr_tutorial/release/htmls/">ANTLR教程</link></para>
+    <para>时，将别的某个docbook的xml中已有的帖子链接，都是link形式的，去转换为bibliomixed的形式。</para>
+    <para>本来都是手动一点点复制粘贴，然后再修改ref的xml:id的值的，很是麻烦，现在去用正则，一次性处理：</para>
+    <para><screen><![CDATA[.+(<link\s+xl:href="http://.+?/([\w_]+)/?">[^<>]+?</link>).+]]></screen></para>
+    <para><screen><![CDATA[<bibliomixed xml:id="ref.\2">\r\n <bibliosource>\1</bibliosource>\r\n <author>Crifan Li</author>\r\n</bibliomixed>]]></screen></para>
+    <para>将：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/before_docbook_link_to_bibliomixed.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/before_docbook_link_to_bibliomixed.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>替换为：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/function/regex/after_docbook_link_to_bibliomixed.png" align="left"   scalefit="0" width="100%"/></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/function/regex/after_docbook_link_to_bibliomixed.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>就可以免去手动的麻烦了。</para>
+    <para>对应的，就是把之前的link内容：</para>
+    <programlisting language="xml">
+<![CDATA[
+        <para><link xl:href="http://www.crifan.com/summary_antlr_the_following_token_definitions_can_never_be_matched_because_prior_tokens_match_the_same_input/">【整理】关于antlr中出错"The following token definitions can never be matched because prior tokens match the same input"的原因和解决思路</link></para>
+]]>
+    </programlisting>
+    <para>就变成了：</para>
+    <programlisting language="xml">
+<![CDATA[
+<bibliomixed xml:id="ref.summary_antlr_the_following_token_definitions_can_never_be_matched_because_prior_tokens_match_the_same_input">
+  <bibliosource><link xl:href="http://www.crifan.com/summary_antlr_the_following_token_definitions_can_never_be_matched_because_prior_tokens_match_the_same_input/">【整理】关于antlr中出错"The following token definitions can never be matched because prior tokens match the same input"的原因和解决思路</link></bibliosource>
+  <author>Crifan Li</author>
+</bibliomixed>
+]]>
+    </programlisting>
+    <para>之后，就可以直接拷贝bibliomixed的内容，到对应的docbook的book中的reference.xml中的bibliography中去了。</para>
+</example>
+
+</sect1>

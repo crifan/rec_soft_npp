@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<bibliography
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    
+    xml:id="reference">
+
+<bibliomixed xml:id="ref.old_rec_npp">
+  <bibliosource><link xl:href="http://www.crifan.com/detailed_intro_about_usage_and_features_of_notepad_plus_plus_which_is_one_of_the_best_lightweight_text_editor_and_the_best_alternative_for_ultraedit_and_notepad/">【详细】Notepad++使用心得和特色功能介绍 -&gt; notepad/ultraedit的最好的替代品，最好用的轻量级文本编辑器</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.diff_ansi_and_unicode">
+  <bibliosource><link xl:href="http://sourceforge.net/projects/notepad-plus/forums/forum/331754/topic/4955411">Difference between ansi and unicode version</link></bibliosource>
+  <author>sourceforge</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.enc_unicode">
+  <bibliosource><link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html#enc_unicode">支持世界上几乎所有字符的字符编码：Unicode</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.get_plugin_in_npp">
+  <bibliosource><link xl:href="http://sourceforge.net/apps/mediawiki/notepad-plus/index.php?title=Plugin_Central">Notepad++中的“获取插件”</link></bibliosource>
+  <author>sourceforge</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.hexeditor_v_0_9_5">
+  <bibliosource><link xl:href="http://sourceforge.net/projects/npp-plugins/files/Hex%20Editor/Hex%20Editor%20Plugin%20v0.9.5/">v0.9.5</link></bibliosource>
+  <author>sourceforge</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.hex_editor">
+  <bibliosource><link xl:href="http://sourceforge.net/projects/npp-plugins/files/Hex%20Editor/">Hex Editor</link></bibliosource>
+  <author>sourceforge</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.char_encoding">
+  <bibliosource><link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html">字符编码详解</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.zhcn_charset">
+  <bibliosource><link xl:href="http://www.crifan.com/files/doc/docbook/zhcn_charset/release/html/zhcn_charset.html">中文字符编码标准+Unicode+Code Page</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.utf8_bom_efbbbf">
+  <bibliosource><link xl:href="http://www.crifan.com/files/doc/docbook/char_encoding/release/html/char_encoding.html#utf8_bom_efbbbf">关于UTF-8的BOM：“EF BB BF”</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.npp_back_ref">
+  <bibliosource><link xl:href="http://stackoverflow.com/questions/8311027/notepad-regex-backreference-missing">Notepad++ Regex Backreference missing</link></bibliosource>
+  <author>stackoverflow</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.how_use_regex_in_npp">
+  <bibliosource><link xl:href="http://sourceforge.net/apps/mediawiki/notepad-plus/index.php?title=Regular_Expressions#Example_1">How to use regular expressions in Notepad++ (tutorial)</link></bibliosource>
+  <author>sourceforge</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.regex_scite">
+  <bibliosource><link xl:href="http://www.scintilla.org/SciTERegEx.html">Regular Expressions in SciTE</link></bibliosource>
+  <author>scintilla</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.cr_lf_detail_explanation">
+  <bibliosource><link xl:href="http://www.crifan.com/detailed_carriage_return_0x0d_0x0a_cr_lf__r__n_the_context/">【详解】回车 换行 0x0D 0x0A CR LF \r \n的来龙去脉</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.right_menu_run_cmd">
+  <bibliosource><link xl:href="http://www.crifan.com/files/doc/docbook/soft_dev_basic/release/html/soft_dev_basic.html#right_menu_run_cmd">右键快速打开cmd并且定位到该文件夹所在路径</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+<bibliomixed xml:id="ref.bullzip_pdf_printer">
+  <bibliosource><link xl:href="http://www.crifan.com/files/doc/docbook/crifan_rec_soft/release/html/crifan_rec_soft.html#common.bullzip_pdf_printer">PDF打印机：Bullzip PDF Printer</link></bibliosource>
+  <author>crifan</author>
+</bibliomixed>
+
+</bibliography>

@@ -1,0 +1,450 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<!DOCTYPE chapter
+[
+
+<!ENTITY % crl_ent PUBLIC "crl.ent" 'http://www.crifan.com/files/res/docbook/entity/crl.ent'>
+%crl_ent;
+
+<!-- <!ENTITY % crl_ent PUBLIC "crl.ent" 'null'>%crl_ent; -->
+
+<!-- <!ENTITY % crl_ent SYSTEM "crl.ent">%crl_ent; -->
+<!-- <!ENTITY % crl_ent SYSTEM "../../../config/entity/crl.ent">%crl_ent; -->
+
+]>
+
+<chapter 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    
+    xml:id="npp_plugins">
+<title>Notepad++的插件</title>
+
+<para>插件，意味着功能的扩展。</para>
+<para>所以当你需要某些功能，而Notepad++本身没有提供此功能，此时就可以考虑插件了。</para>
+<para>Notepad++不仅支持通过插件扩展已有功能，更主要的是目前已经有非常多的插件可供选择了。</para>
+<para>而且很多功能都是很实用和很方便使用的。</para>
+<para>你可以通过点击工具栏中的 插件(P)，而找到目前已经安装了哪些可用的插件：</para>
+<informalfigure>
+    <mediaobject>
+        <imageobject role="html"><imagedata fileref="images/plugin/npp_plugin.png" align="left"   scalefit="0" width="100%" /></imageobject>
+        <imageobject role="fo">  <imagedata fileref="images/plugin/npp_plugin.png" align="center" scalefit="0" width="100%"/></imageobject>
+    </mediaobject>
+</informalfigure>
+<para>下面对Notepad++的插件的各个方面，进行详细介绍：</para>
+
+<sect1 xml:id="npp_plugin_location"><title>Notepad++插件的存在形式与位置</title>
+    <para>Notepad++的插件是dll文件的形式存在的</para>
+    <para>比如16进制编辑器，HEX-Editor，对应的dll文件是：HexEditor.dll</para>
+    <para>插件是存放在安装目录下的plugins目录中，比如D:\Program Files (x86)\Notepad++\plugins</para>
+
+    <sect2 xml:id="npp_disabled_plugin"><title>Notepad++中被禁用了的插件</title>
+        <para>某些插件，由于某些原因，比如兼容性不够好的话，会在重新安装Notepad++的过程中，被Notepad++直接禁用掉。</para>
+        <para>比如，我最喜欢的其中一个插件，叫做HEX-Editor，由于兼容性不好而在安装过程中被禁用：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/plugin/hexeditor_be_disabled.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/plugin/hexeditor_be_disabled.png" align="center" scalefit="0" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>被禁用的插件，其dll文件会被移至到disabled目录中，比如D:\Program Files (x86)\Notepad++\plugins\disabled</para>
+        
+        <sect3 xml:id="npp_restore_disabled_plugin"><title>如何恢复被禁用的插件</title>
+            <para>有时候，我们需要恢复被禁用的插件。</para>
+            <para>比如上述HEX-Editor，对于我来说，用了几年了，其实都没遇到啥兼容性问题，所以（在安装完毕后）需要恢复（继续使用）该插件。</para>
+            <para>而恢复该插件的办法，其实很简单，就是到disabled中，找到对应的dll文件，然后放回plugins目录中即可。</para>
+            <para>比如此处的例子，就是把HexEditor.dll从D:\Program Files (x86)\Notepad++\plugins\disabled移动到D:\Program Files (x86)\Notepad++\plugins即可。</para>
+        </sect3>
+    </sect2>
+</sect1>
+    
+<sect1 xml:id="npp_default_plugins"><title>Notepad++默认已经安装了的一些插件</title>
+    <para>如<xref linkend="fg.npp_def_plugins" />中所介绍，在安装Notepad++的过程中，默认已经安装了一些常用插件，这些插件的目前包括：</para>
+    <itemizedlist>
+        <listitem>Spell Checker</listitem>
+        <listitem>NPP FTP</listitem>
+        <listitem>NppExport: <xref linkend="npp_plugin_nppexport" /></listitem>
+        <listitem>Plugin Manager: <xref linkend="npp_plugin_manager" /></listitem>
+        <listitem>Converter</listitem>
+    </itemizedlist>
+    <para>关于各插件的功能的详细介绍，请参考<xref linkend="npp_common_plugins" /></para>
+</sect1>
+
+<sect1 xml:id="plugin_download_and_install"><title>Notepad++插件的下载与安装</title>
+    <sect2 xml:id="where_find_npp_plugin"><title>去哪里下载Notepad++的插件</title>
+        <para>目前已知这些地方可以找到Notepad++的插件：</para>
+        <itemizedlist>
+            <listitem><emphasis><link xl:href="http://sourceforge.net/projects/npp-plugins/files/">Notepad++的SourceForge的Plugins主页</link></emphasis>
+                <para>里面可以直接下载对应的插件。不过需要注意的是，该页面中的插件数量，相对不多。</para>
+            </listitem>
+            <listitem><emphasis>？ &rArr; 获取插件</emphasis>
+                <para>在Notepad++软件中，点击菜单栏左右边的那个问号，然后点击获取插件：</para>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/plugin/questionmark_get_plugin.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/plugin/questionmark_get_plugin.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>就可以自动帮你调用浏览器打开页面:<xref linkend="ref.get_plugin_in_npp" /></para>
+                <para>该页面中，包含了对于每个插件的简单介绍，以及其所适用于的版本，是ANSI还是Unicode的。</para>
+                <para>对于想要找一些功能，但是连插件名都不知道的情况下，很适合去那里找找。</para>
+            </listitem>
+        </itemizedlist>
+        <para>如同<xref linkend="npp_version_ansi_uni" />中的介绍，Notepad++插件也是分ANSI和Unicode版本的，所以，你下载插件的时候，记得要下载和你当前Notepad++版本所匹配的插件。</para>
+        <para>比如，<xref linkend="ref.hexeditor_v_0_9_5" />版本的<xref linkend="ref.hex_editor" />中就有：HexEditor_0_9_5_UNI_dll.zip和HexEditor_0_9_5_ANSI_dll.zip，所以，如果你用的是前面所推荐的Unicode版本的话，那么所需要下载的就是HexEditor_0_9_5_UNI_dll.zip。</para>
+    </sect2>
+
+    <sect2 xml:id="npp_plugin_install_methods"><title>Notepad++插件的安装方法</title>
+        <para>Notepad++的插件有多种安装方法：</para>
+        
+        <sect3 xml:id="manually_install_npp_plugin"><title>手动安装插件</title>
+            <para>参考<xref linkend="where_find_npp_plugin" />中的描述，去<link xl:href="http://sourceforge.net/apps/mediawiki/notepad-plus/index.php?title=Plugin_Central">最全的Notepad++插件的官方主页</link>中，找到自己想要的插件。该页面中同时也提供了下载地址。</para>
+            <para>把下载到的插件的dll文件，放到对应的安装目录下的plugins目录中即可。</para>
+            <para>个别的插件，还需要安装其他一些配置文件，比如一些xml配置文件等。具体如何操作，下载下来的插件压缩包中，都会有对应的提示的，按照提示安装即可。</para>
+        </sect3>
+        
+        <sect3 xml:id="plugin_manager_install_npp_plugin"><title>通过Plugin Manager安装插件</title>
+            <para>关于如何通过使用Plugin Manager去安装插件，请参看<xref linkend="npp_plugin_manager" /></para>
+        </sect3>
+        
+        <note><title>插件安装完毕后，最好重启Notepad++</title>
+            <para>Notepad++插件安装完毕后，需要重启Notepad++，这样才能正确识别并可用。</para>
+        </note>
+    </sect2>
+</sect1>
+
+<sect1 xml:id="npp_common_plugins"><title>Notepad++中常用的插件</title>
+    <para></para>
+    
+    <sect2 xml:id="npp_plugin_manager"><title>插件管理器: Plugin Manager</title>
+        <para>插件功能：此插件可以帮你管理插件，包括查看当前已经安装的插件有哪些，以及自动帮你下载相应的插件。</para>
+        <para>插件用途：主要用于管理（安装和卸载）插件</para>
+        <para>插件安装：在安装过程中，默认已选择安装此插件：<xref linkend="fg.npp_def_plugins" /></para>
+        
+        <sect3 xml:id="open_plugin_manager"><title>打开Plugin Manager</title>
+            <para>插件(P) &rarr; Plugin Manager &rarr; Show Plugin Manager &rarr; Avaliable，一栏显示当前可用的插件列表，选中你要的插件，然后点击下面的Install即可自动下载和安装对应插件，很是方便。</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2545659689388324509.jpg" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/2545659689388324509.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+        <para>其中，在Intalled一栏可以看到当前已经安装了的插件有哪些：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/plugin/installed_plugins.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/plugin/installed_plugins.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        
+        <sect3 xml:id="install_plugin_via_manager"><title>通过Plugin Mangager安装插件</title>
+            <para>下面以Light Explorer为例，说明如何通过Plugin Manager来安装插件：</para>
+            <para>通过<xref linkend="open_plugin_manager" />打开Plugin Manager后，找到并选中Light Explorer，然后点击Install：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/plugin_manager_choose_lightexplored.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/plugin_manager_choose_lightexplored.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>Plugin Manager就会帮你自动下载对应的插件并安装：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/installing_plugin.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/installing_plugin.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>安装完毕后，会提示你是否重启：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/install_plugin_done.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/install_plugin_done.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>选择“是”后，Notepad++会自动重启，并且会自动打开关闭前已打开的这些文件。</para>
+            <para>此时，就可以看到已经安装的插件了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/installed_light_explorer.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/installed_light_explorer.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+    
+    <sect2 xml:id="npp_plugin_hex_editor"><title>16进制编辑器: HEX-Editor</title>
+        <para>插件功能：此插件主要提供了16进制查看与编辑的功能。</para>
+        <para>插件用途：以16进制模式查看和编辑文件。</para>
+        <para>插件安装：参考<xref linkend="plugin_download_and_install" />去安装Hex Editor插件</para>
+        
+        <para>HEX-Editor功能详解：</para>
+
+        <sect3 xml:id="npp_hex_editor_hex_mode"><title>以16进制模式查看当前文件</title>
+            <para>有几种方法实现以16进制模式查看当前文件：</para>
+            <itemizedlist>
+                <listitem>
+                    <para>插件(P) &rArr; HEX-Editor &rArr; View in HEX Ctrl+Alt+Shift+H</para>
+                    <informalfigure>
+                        <mediaobject>
+                            <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/674976994169307417.jpg" align="left"   scalefit="0" width="100%" /></imageobject>
+                            <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/674976994169307417.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+                        </mediaobject>
+                    </informalfigure>
+                </listitem>
+                <listitem>
+                    <para>点击工具栏上HEX Editor的图标<inlinemediaobject><mediaobject><imagedata href="images/plugin/hex_editor_icon.png" /></mediaobject></inlinemediaobject></para>
+                </listitem>
+                <listitem>
+                    <para>直接使用快捷键：Ctrl+Alt+Shift+H</para>
+                </listitem>
+            </itemizedlist>
+            <tip>
+                <para>退出16进制模式，和进入16进制模式的方法相同。</para>
+            </tip>
+            <para>然后就可以以16进制模式，查看当前文件了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="http://www.crifan.com/files/pic/work_and_job/1043146263706847699.jpg" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="http://www.crifan.com/files/pic/work_and_job/1043146263706847699.jpg" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>接着，就可以去查看和编辑对应的16进制的值。</para>
+            <para>关于更多的选项，比如想要设置其他字体类型和字体大小，可以去上述的HEX-Editor下面的Options中，根据自己的需要设置：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/hex_editor_options.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/hex_editor_options.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+    
+    <sect2 xml:id="npp_plugin_nppexport"><title>导出彩色代码为其他（word，HTML）格式的文件: NppExport</title>
+        <para>插件功能：导出已着色代码为其他格式的文件</para>
+        <para>插件用途：将彩色代码，导出为word文档（RFT）或网页（HTML）文件，或者将彩色代码（RTF格式或HTMl格式）拷贝到剪贴板，粘贴到别的（word文档，HTML网页）中去。</para>
+        <para>插件安装：在安装过程中，默认已选择安装此插件：<xref linkend="fg.npp_def_plugins" /></para>
+
+        <para>NppExport功能详解：</para>
+
+        <sect3 xml:id="npp_export_to_word_html"><title>将当前（已着色/代码高亮/语法高亮的）彩色代码导出到Word文件或HTML网页中</title>
+            <para>对于选中的代码，将其对应的RTF格式的内容，复制到剪贴板：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/copy_rtf_to_clipboard.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/copy_rtf_to_clipboard.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>然后粘贴到新建的word文档中：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/copy_hl_rtf_code_to_word.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/copy_hl_rtf_code_to_word.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>想要获得彩色代码的人，对于此功能，相信会非常喜欢的。</para>
+            <tip><title>直接拷贝代码，是没有彩色代码的效果的</title>
+                <para>差点忘了说了，与此处的彩色代码拷贝功能相对应的是：</para>
+                <para>对于在普通文本编辑器中，包括当前的Notepad++编辑器，安装普通赋值操作去的拷贝的一段代码：</para>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/plugin/copy_plain_code.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/plugin/copy_plain_code.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>然后粘贴到别的地方，是没有彩色代码的效果的：</para>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/plugin/paste_plain_to_word.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/plugin/paste_plain_to_word.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>所以，有了对比，才知道此处彩色代码拷贝的好处。</para>
+            </tip>
+            <para>对应的，想要将整个文件全部导出的话，就是：</para>
+            <para>插件(P) &rArr; NppExport &rArr; Export to RTF</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/nppexport.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/nppexport.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>即可将当前已经语法高亮的彩色的xml代码：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/orig_hl_xml_code.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/orig_hl_xml_code.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>导出到word文件中了：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/hl_xml_code_to_rtf.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/hl_xml_code_to_rtf.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>很明显，如果你需要在word中粘贴此彩色代码，此功能，再好用不过了。</para>
+            <para></para>
+            <para>对于导出为HTML网页，做法是类似的：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/export_hl_code_to_html.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/export_hl_code_to_html.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+    
+    <sect2 xml:id="npp_plugin_light_explorer"><title>轻量级资源管理器: Light Explorer</title>
+        <para>插件功能：轻量级的Explorer</para>
+        <para>插件用途：方便打开文件</para>
+        <para>插件安装：参考<xref linkend="install_plugin_via_manager" />去安装Light Explorer插件。</para>
+
+        <para>Light Explorer功能详解：</para>
+        <sect3 xml:id="use_light_explorer_open_file"><title>通过Light Explorer浏览文件，打开文件</title>
+            <para>可以通过直接点击对应的图标<inlinemediaobject><mediaobject><imagedata href="images/plugin/light_explorer_icon.png" /></mediaobject></inlinemediaobject>去打开轻量级的资源管理器：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/opened_light_explorer.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/opened_light_explorer.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>接下来，就很简单了，就是浏览文件夹，找到想要打开的文件，双击，即可用此Notepad++打开该文件了。</para>
+            <para>刚试了试，发现，此处，不论是何种文件，比如图片，都可以用Notepad++打开的。</para>
+            <para>当然，打开的图片等类型的文件的话，也都是以文本模式打开的：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/light_explorer_open_jpg.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/light_explorer_open_jpg.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </sect3>
+    </sect2>
+    
+    <sect2 xml:id="npp_plugin_xbracket"><title>括号自动补全插件: XBracket Lite</title>
+        <para>之前就一直希望Notepad++拥有此功能，结果没找到选项，现在终于通过插件得以实现了。</para>
+        <para>是从<link xl:href="http://sourceforge.net/apps/mediawiki/notepad-plus/index.php?title=Auto_Completion">Bracket autocompletion</link>中得知的此插件XBracket Lite的。</para>
+
+        <para>插件功能：对于一些括号类的字符，比如单引号',双引号",圆括号(,大括号{,反括号[等，自动帮你实现自动补全</para>
+        <para>插件用途：减轻了写代码和编译xml类的文件时候的工作量</para>
+        <para>插件安装：参考<xref linkend="install_plugin_via_manager" />去安装XBracket Lite插件，截图如下：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/plugin/select_xbrackets_lite.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/plugin/select_xbrackets_lite.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+        
+        <para>XBracket Lite功能详解：</para>
+        <sect3 xml:id="use_sbracket_lite_autocomplete_bracket"><title>通过XBracket Lite实现括号的自动补全</title>
+            <para>先去打开相应的设置：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/choose_xbrackets_lite_settings.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/choose_xbrackets_lite_settings.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>再根据自己的需要去设置：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/plugin/xbrackets_settings.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/plugin/xbrackets_settings.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>其中解释一下相应的选项的含义：</para>
+            <itemizedlist>
+                <listitem>Treat'' as brackets
+                    <para>把单引号'，也看成是括号，这样以后输入单个单引号，也可以实现自动补全另一个单引号了。</para>
+                </listitem>
+                <listitem>Treat&lt; &gt; as brackets
+                    <para>把尖括号也看成是括号的一类，这样就方便了在xml，html等文件中写tag的时候，自动帮你补全。</para>
+                    <para>如果选择了: &lt;/&gt;，那么输入了&lt;后，就补全出来/&gt;了。</para>
+                    <para>如果选择了：Only if file extension contains，那么就只有当前是这些htm,xml等文件的时候，才对于尖括号使用自动补全。别的类型文件中，不去对尖括号实现补全操作。</para>
+                </listitem>
+                <listitem>Skip escaped bracket characters:\[,\} etc.
+                    <para>当输入\[或者是\}的时候，就不自动补全。</para>
+                    <para>因为在写代码时，很多时候反斜杠加上这些括号，本身就是想要表示单个字符而已，所以不需要补全。</para>
+                </listitem>
+                <listitem>Autocomplete brackets([{""}])
+                    <para>即 是否启用此插件。</para>
+                </listitem>
+            </itemizedlist>
+            <para>设置好之后，启用该插件，随便打开个文件，输入这些括号类字符的时候，就会发现，可以自动帮你实现自动补全了。</para>
+        </sect3>
+    </sect2>
+
+    <sect2 xml:id="npp_plugin_jn"><title>支持Notepad++中使用js脚本实现功能扩展: jN</title>
+        <para>之前叫做NppScripting，后来改名为jN</para>
+        <para>插件功能：使得Notepad++中可以通过运行对应的javascript脚本，其会扩展一些额外功能，添加相应的菜单，提供各种功能</para>
+        <para>插件用途：使得你可以实现，自己写javascript脚本，几乎可以实现任何你想要的功能。而且本身其已经实现了很多常用的功能，供你使用。</para>
+        <para>插件安装：</para>
+        <para>参考<xref linkend="manually_install_npp_plugin" />下载<link xl:href="http://www.softwarecanoe.de/jn/jn.zip">jn.zip</link></para>
+        <para>解压后，把jN文件夹和jN.dll拷贝到Notepad++的plugin目录下即可。</para>
+        <para>更多的细节，参考<link xl:href="http://www.crifan.com/npp_plugin_jn_nppscripting_url_encode_decode/">【记录】利用Notepad++的jN插件中的URL编码解码插件，实现从错误的google地址中提取原始url的功能</link></para>
+    </sect2>
+
+    <sect2 xml:id="npp_plugin_function_list"><title>显示函数列表：Function List</title>
+        <para>插件功能：用于显示出函数的列表。支持很多种语言，包括C, C++, Resource File, Java, Assembler, MS INI File, HTML, Javascript, PHP, ASP, Pascal, Python, Perl, Objective C, LUA, Fortran, NSIS, VHDL, SQL, VB and BATCH</para>
+        <para>插件用途：这样以后打开Python等文件，就可以通过双击显示出来的函数列表中的某函数，实现快速定位到相应的位置了。</para>
+        <para>插件安装：</para>
+        <para>参考<xref linkend="manually_install_npp_plugin" />下载FunctionList_2_1_UNI_dll.zip</para>
+        <para>解压后，按照install.txt中的提示去：</para>
+        <para>把FunctionList.dll拷贝到 安装目录\Notepad++\plugin下</para>
+        <para>把Gmod Lua.bmp和C++.flb拷贝到 安装目录\Notepad++\plugin\config下</para>
+        <para>把FunctionListRules.xml拷贝到 %APPDATA%\Notepad++\plugins\config下</para>
+        <para>其中需要注意的是，此处的FunctionListRules.xml就是定义了各种语言的搜索函数的规则。必须把该文件拷贝到上述位置才可以。像我最开始的时候，拷贝到安装目录\Notepad++\plugin\config下是不可以的。</para>
+        <para>而%APPDATA%的位置，在我这里的是C:\Users\CLi\AppData\Roaming\Notepad++\plugins\config</para>
+        <para>之后通过 插件 &rArr; Function List &rArr; List...或者快捷键Ctrl+Alt+Shift+L，就可以打开当前文件的函数列表了：</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject role="html"><imagedata fileref="images/plugin/function_list.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                <imageobject role="fo">  <imagedata fileref="images/plugin/function_list.png" align="center" scalefit="1" width="100%"/></imageobject>
+            </mediaobject>
+        </informalfigure>
+    </sect2>
+    
+    <sect2 xml:id="npp_plugin_jsminnpp"><title>js代码压缩,js代码格式化,JSON查看器: JSMinNpp</title>
+        <para>插件功能：包含三个功能：</para>
+        <orderedlist>
+            <listitem>js代码压缩</listitem>
+            <listitem>js代码格式化功能</listitem>
+            <listitem>JSON代码查看器，以树状列表显示</listitem>
+        </orderedlist>
+        <para>插件用途：三和一功能的插件，很是方便使用。</para>
+        <para>插件安装：</para>
+        <para>参考<xref linkend="manually_install_npp_plugin"/>，去<link xl:href="http://jsminnpp.sourceforge.net/">JSMinNpp</link>下载JSMinNPP.1.11.2.uni.zip,解压后把JSMinNPP.dll拷贝到plugin目录即可。</para>
+        <para>去试了试，真的很好用：</para>
+        <orderedlist>
+            <listitem>js代码压缩
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/plugin/jsmin_compress_js.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/plugin/jsmin_compress_js.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+            </listitem>
+            <listitem>js代码格式化功能
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/plugin/jsmin_formart_js.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/plugin/jsmin_formart_js.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+            </listitem>
+            <listitem>JSON代码查看器，以树状列表显示
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/plugin/jsmin_json_treeview.png" align="left"   scalefit="0" width="100%"/></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/plugin/jsmin_json_treeview.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+            </listitem>
+        </orderedlist>
+        <para>话说，装了这个插件之后，以前一直使用的，在线版本的HTML/JS代码格式化网站:<link xl:href="http://jsbeautifier.org/">Beautify JavaScript or HTML</link>，就可以减少使用次数了。</para>
+        <para>因为javascript，json等代码，都可以使用此插件格式化并以树状显示了。</para>
+        <para>只不过，对于html代码的格式化，还是需要用到那个jsbeautifier的。</para>
+    </sect2>
+
+</sect1>
+
+</chapter>

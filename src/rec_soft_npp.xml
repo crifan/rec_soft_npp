@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<!DOCTYPE book
+[
+
+<!ENTITY cur_book_name      "rec_soft_npp" >
+<!ENTITY publish_date       "2013-12-15" >
+<!ENTITY release_version    "3.0" >
+
+<!ENTITY copyrith_year "2013" >
+<!ENTITY entity_common_multi_format     SYSTEM  "../../entity_common_multi_format.xml">
+<!ENTITY entity_common_publish_info     SYSTEM  "../../entity_common_publish_info.xml">
+]>
+
+<book
+    version="5.0"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+
+    xml:lang="zh_CN">
+<info>
+    <title>【crifan推荐】轻量级文本编辑器，Notepad最佳替代品：Notepad++</title>
+    <subtitle></subtitle>
+    <keywordset>
+        <keyword>crifan推荐</keyword>
+        <keyword>Notepad++</keyword>
+        <keyword>轻量级</keyword>
+        <keyword>文本编辑器</keyword>
+        <keyword>Notepad替代品</keyword>
+    </keywordset>
+
+    <abstract>
+        <para>本文主要介绍了笔者crifan推荐的轻量级文本编辑器，Notepad最佳替代品：Notepad++，内容主要包含notepad，notepad2，notepad++，ultraEdit的比较，使用Notepad++前要了解的知识，Notepad++的插件，Notepad++的安装过程，Notepad++的各种常见和不常见的功能的详解</para>
+        &entity_common_multi_format;
+    </abstract>
+
+    <revhistory>
+        <revision>
+            <revnumber>&release_version;</revnumber>
+            <date>&publish_date;</date>
+            <revremark>
+                <orderedlist>
+                    <listitem>添加了3个正则表达式替换的例子：给sect2的title不变前提下添加xml:id</listitem>
+                    <listitem>添加了3个正则表达式替换的例子：将antlr的token中的id的引号去掉变成token</listitem>
+                    <listitem>添加了3个正则表达式替换的例子：将原先的单引号括起来的ID变成antlr中的该token的定义</listitem>
+                    <listitem>如果乱码则切换到所推测的编码直至消除乱码</listitem>
+                    <listitem>修复了一些笔误</listitem>
+                    <listitem>把正则的查找和替换，单独整理成子xml，同时把图片也移至独立的文件夹。</listitem>
+                    <listitem>把列模式单独整理成子xml</listitem>
+                    <listitem>增加正则替换的例子：dd宏定义中去除多国语言字符串，C宏定义转java变量定义</listitem>
+                    <listitem>增加正则替换的例子：docbook的link变bibliomixed</listitem>
+                </orderedlist>
+            </revremark>
+            <authorinitials>crl</authorinitials>
+        </revision>
+        <revision>
+            <revnumber>2.1</revnumber>
+            <date>2013-09-04</date>
+            <revremark>
+                <orderedlist>
+                    <listitem>添加了用Notepad++选用合适的编码打开对应的文件</listitem>
+                    <listitem>添加了XBracket Lite插件的内容</listitem>
+                    <listitem>添加了2个正则表达式替换的例子</listitem>
+                    <listitem>添加了1个正则表达式查找的例子</listitem>
+                    <listitem>添加了文字右对齐</listitem>
+                    <listitem>添加了格式化XML</listitem>
+                    <listitem>添加了单词的自动完成</listitem>
+                    <listitem>添加了1个正则表达式替换的例子</listitem>
+                    <listitem>添加了1个正则表达式替换的例子：给sect2添加xml:id和title</listitem>
+                    <listitem>添加了Ctrl+D拷贝单行或多行</listitem>
+                </orderedlist>
+            </revremark>
+            <authorinitials>crl</authorinitials>
+        </revision>
+        <revision>
+            <revnumber>1.0</revnumber>
+            <date>2012-08-03</date>
+            <revremark>
+                <orderedlist>
+                    <listitem>把npp从crifan_rec_soft中提取称为单独的book</listitem>
+                </orderedlist>
+            </revremark>
+            <authorinitials>crl</authorinitials>
+        </revision>
+    </revhistory>
+
+    &entity_common_publish_info;
+</info>
+
+<xi:include href="preface.xml" />
+<xi:include href="ch01_npp_plugin.xml" />
+<xi:include href="ch02_npp_install.xml" />
+<xi:include href="ch03_npp_function.xml" />
+<xi:include href="reference.xml" />
+
+</book>

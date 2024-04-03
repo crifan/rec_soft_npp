@@ -1,0 +1,272 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<!DOCTYPE chapter
+[
+
+<!ENTITY % crl_ent PUBLIC "crl.ent" 'http://www.crifan.com/files/res/docbook/entity/crl.ent'>
+%crl_ent;
+
+]>
+
+<chapter 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    
+    xml:id="npp_install"
+    >
+<title>Notepad++的安装过程</title>
+
+<para>其实关于Notepad++的安装，本身操作步骤简单，没有太多解释必要，但是对于安装过程中很多的参数，有必要解释一下：</para>
+<para>下面就详细解释一下Notepad++的安装过程：</para>
+<para>下载了notepad的可执行文件，比如npp.6.1.1.Installer.exe后，双击它，接着就可以安装了：</para>
+
+<sect1 xml:id="npp_install_sel_lan"><title>Notepad++安装：选择语言</title>
+    <para>其默认语言是English：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_def_en_lan.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_def_en_lan.png" align="center" scalefit="0" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>此处改为“简体字”：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_choose_zhcn.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_choose_zhcn.png" align="center" scalefit="0" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>然后点击<guimenuitem>OK</guimenuitem>：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_lan_ok.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_lan_ok.png" align="center" scalefit="0" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+</sect1>
+
+<sect1 xml:id="npp_install_guide"><title>Notepad++安装：安装向导</title>
+    <para>然后出现欢迎界面，点击<guimenuitem>下一步</guimenuitem>：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_guide_ok.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_guide_ok.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+</sect1>
+
+<sect1 xml:id="npp_install_license"><title>Notepad++安装：许可证协议</title>
+    <para>出现“许可证协议”，点击<guimenuitem>我接受</guimenuitem>：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_license_accept.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_license_accept.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+</sect1>
+
+<sect1 xml:id="npp_install_choose_loc"><title>Notepad++安装：选择安装位置</title>
+    <para>然后是“选择安装位置”的界面，对于其中的“目标文件夹”，可以使用默认设置的值，也可以选择一个别的路径，比如我此处改为了D盘的相应位置：D:\Program Files (x86)\Notepad++\</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_location_set_d.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_location_set_d.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>再点击<guimenuitem>下一步</guimenuitem></para>
+</sect1>
+
+<sect1 xml:id="npp_install_choose_component"><title>Notepad++安装：选择组件</title>
+    <para>出现“选择组件”的界面：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_choose_componet.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_choose_componet.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>可以看到，此处有好几个选项：</para>
+    <itemizedlist>
+        <listitem>Context Menu Entry
+            <figure xml:id="fg.context_menu_open_entry"><title>Notepad++的右击打开文件功能</title>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/context_menu_entry.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/context_menu_entry.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </figure>
+            <para>默认已勾选</para>
+            <para>其作用是添加右键快捷键。即，对于任何文件右击所出现的菜单中，都会有“Edit with Notepad++”：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/edit_with_notepad.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/edit_with_notepad.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>其显而易见的好处是，可以很方便的启动Notepad++去打开相应的（任何）文件。</para>
+        </listitem>
+        <listitem>Auto Complete Files
+            <formalpara xml:id="npp_choose_auto_complete"><title>Notepad++安装选项：Auto Complete Files</title>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/install/auto_complete_files.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/install/auto_complete_files.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>默认已勾选</para>
+                <para>其作用是，对于各种语言或规范（C，C++，Docbook，Python等），支持<xref linkend="npp_func_auto_complete" />的功能。</para>
+            </formalpara>
+        </listitem>
+        <listitem>Plugins
+            <figure xml:id="fg.npp_def_plugins"><title>Notepad++默认已安装了一些插件</title>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/npp_def_plugins.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/npp_def_plugins.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </figure>
+            <para>默认已勾选</para>
+            <para>其作用是，默认是否安装一些插件。当然，这些插件是足够的好用和常用，所以Notepad++才会默认将他们集成进来，默认勾选上的。</para>
+            <para>关于这些插件的详细功能的介绍，参见<xref linkend="npp_common_plugins" /></para>
+        </listitem>
+        <listitem>Localization
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/components_localization.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/components_localization.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>默认无勾选</para>
+            <para>其作用是，在Notepad++的界面显示方面的对于各种语言的支持，即Notepad++本身软件的各个工具栏等部分的显示的文字所用的语言。</para>
+            <para>对应着Notepad++中的：设置(T) &rarr; 首选项... &rarr; 常用,中的“界面语言”：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/interface_language.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/interface_language.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>此处可选可不选，因为本身除了当前中文和默认英文，其他的也基本遇不到。</para>
+        </listitem>
+        <listitem>Themes
+            <formalpara xml:id="npp_install_para_themes"><title>Notepad++安装选项：Themes</title>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/install/components_themes.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/install/components_themes.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>默认已勾选。即Notepad++中，是否支持各种主题。</para>
+                <para>其对应着Notepad++中的：设置(T) &rarr; 语言格式设置...，中的“选择主题”：</para>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/install/choose_themes.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/install/choose_themes.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>关于每种主题的效果，可以参看<xref linkend="npp_func_multi_themes" /></para>
+            </formalpara>
+        </listitem>
+        <listitem>As default html viewer
+            <formalpara xml:id="npp_install_para_def_html_viewer"><title>Notepad++安装选项：As default html viewer</title>
+                <informalfigure>
+                    <mediaobject>
+                        <imageobject role="html"><imagedata fileref="images/install/as_default_html_viewer.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                        <imageobject role="fo">  <imagedata fileref="images/install/as_default_html_viewer.png" align="center" scalefit="1" width="100%"/></imageobject>
+                    </mediaobject>
+                </informalfigure>
+                <para>默认无勾选。建议勾选。</para>
+                <para>选上后，其就可以用作默认的HTML网页源码编辑器了，详情参看：<xref linkend="npp_func_def_html_viewer" /></para>
+            </formalpara>
+        </listitem>
+        <listitem>Auto-Updater
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/check_auto_updater.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/check_auto_updater.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>默认已勾选。</para>
+            <para>作用为，安装此模块后，就可以支持Notepad++的自动更新了。</para>
+            <para>其对应着：设置(T) &rarr; 首选项... &rarr; 其他,中的“启用Notepad++自动更新”：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/enable_npp_auto_update.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/enable_npp_auto_update.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>启用后，每次Notepad++启动时，都会去检测是否有更新。如果有，会跳出对话框提示你是否更新的。</para>
+        </listitem>
+        <listitem>User Manual
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/user_manual.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/user_manual.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>默认已勾选。</para>
+            <para>作用是，安装本地的帮助文件。其是网页的形式。Notepad++中通过点击：？ &rarr; 帮助 Shift+F1：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/questionmark_help.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/questionmark_help.png" align="center" scalefit="0" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>即可打开对应的网页文件：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/install/local_html_help.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/install/local_html_help.png" align="center" scalefit="1" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </listitem>
+    </itemizedlist>
+    <para>根据需要，选择所需的组件后，点击"下一步"</para>
+</sect1>
+
+<sect1 xml:id="npp_install_choose_component_para"><title>Notepad++安装：选择组件(参数)</title>
+    <para>会出现另外一些组件参数选择：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/choose_componets_para.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/choose_componets_para.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>其也有一些参数需要解释：</para>
+    <itemizedlist>
+        <listitem>Don't use %APPDATA%
+            <para>默认没勾选。</para>
+            <para>作用是允许配置文件放在Notepad++的安装路径下。由此，可以实现支持把整个Notepad++都放到U盘中，到处带着跑了。</para>
+            <para>其用途主要是，如果本身自己对于Notepad++有很多自定义的配置，而换了个电脑，就得重新配置Notepad++，很是麻烦。</para>
+            <para>而此时，就可以在安装的时候，选择此项，这样以后所有的配置都是放在安装路径下，然后你可以把此Notepad++全部文件都放到U盘中。</para>
+            <para>这样，换了电脑，也都可以继续使用你自己的这个Notepad++了。</para>
+        </listitem>
+        <listitem>Allow plugins to be loaded from %APPDATA%\\notepad++\\plugins
+            <para>默认没勾选。</para>
+            <para>作用是不太了解。看起来好像是说，允许从%APPDATA%\\notepad++\\plugins的位置，载入插件，如此做法，有一定的安全隐患。</para>
+            <para>其估计指的是，有些不安全的插件，放到对应位置的话，其也会自动载入，所以可能会导致一些安全问题。</para>
+        </listitem>
+        <listitem>Create Shortcut on Desktop
+            <para>默认没勾选。</para>
+            <para>在桌面穿件一个Notepad++的快捷方式。</para>
+            <para>常见使用Notepad++的方式都是从文件右键中选择“Edit with Notepad++”，所以一般不需要在桌面创建快捷方式。</para>
+        </listitem>
+        <listitem>Use the obsolete and monstrous icon
+            <para>默认没勾选。</para>
+            <para>使用旧的风格的图标。</para>
+            <para>估计旧的风格的图标很难看，所以作者才说，即使你选择此项，其也不会责怪你的。要不然肯定是默认也勾选此项才对。</para>
+        </listitem>
+    </itemizedlist>
+    <para>然后点击“安装”，即可。</para>
+</sect1>
+
+<sect1 xml:id="npp_install_complete"><title>Notepad++安装：安装完成</title>
+    <para>安装完毕后，会出现相应的安装完毕界面：</para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject role="html"><imagedata fileref="images/install/install_complete.png" align="left"   scalefit="0" width="100%" /></imageobject>
+            <imageobject role="fo">  <imagedata fileref="images/install/install_complete.png" align="center" scalefit="1" width="100%"/></imageobject>
+        </mediaobject>
+    </informalfigure>
+    <para>然后点击“完成”，即可启动默认勾选了的Notepad++了。</para>
+</sect1>
+
+<para>至此，Notepad++安装完毕。</para>
+
+</chapter>

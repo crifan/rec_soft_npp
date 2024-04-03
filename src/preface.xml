@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<!DOCTYPE preface
+[
+<!ENTITY % crl_ent PUBLIC "crl.ent" 'http://www.crifan.com/files/res/docbook/entity/crl.ent'>
+%crl_ent;
+
+]>
+
+<preface
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    
+    xml:id="preface">
+<title>正文之前</title>
+
+<sect1 xml:id="purpose"><title>目的</title>
+    <para>本文旨在推荐我个人（crifan）觉得好用的，轻量级文本编辑器，Notepad最佳替代品：Notepad++</para>
+</sect1>
+
+<sect1 xml:id="original_post"><title>原帖</title>
+    <para>此文所对应的，原先的旧帖为：<xref linkend="ref.old_rec_npp" /></para>
+</sect1>
+
+<sect1 xml:id="why_rec_npp"><title>为何推荐Notepad++</title>
+    <para>因为Notepad++的确很好用，有很多优点，值得推荐给不熟悉的人。</para>
+    
+    <sect2 xml:id="npp_basic_features"><title>Notepad++的一些基本特点</title>
+        <para>关于Notepad++，先用几句话概述一下其特点：</para>
+        <itemizedlist>
+            <listitem>Notepad++是一个<emphasis>文本编辑工具</emphasis>，而且是<emphasis>免费</emphasis>的。</listitem>
+            <listitem>Notepad++旨在<emphasis>替代Windows默认的Notepad</emphasis>而生，比notepad的功能强大很多很多。</listitem>
+            <listitem>Notepad++比UltraEdit更加<emphasis>轻量级</emphasis>，比Notepad2等更强大好用。</listitem>
+            <listitem>Notepad++本身的功能已经非常强大，且又支持<emphasis>插件</emphasis>，可以扩展更多的功能。并且已经有很多很有用和好用的插件可供选择使用。</listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 xml:id="npp_vs_others"><title>notepad，notepad2，notepad++，ultraEdit比较</title>
+        <para>在详细介绍Notepad++之前，先来解释一下，为何要选择Notepad++，即把常见的一些文本编辑器和Notepad++比较，看看其有哪点好：</para>
+        <para>常见的文本编辑器有很多，此处，只提及Notepad，Notepad2，Notepad++和UltraEdit。</para>
+        <para>对于这些文本编辑器，之前或多或少都曾用过，但是随着使用经验的增长，越加发现，Notepad++是最好用的。</para>
+        <para>目前，在Windows环境下，偶已完全抛弃除了Notepad++之外的其他文本编辑器了。</para>
+        <para>下面，就对这几种常见的文本编辑器，做个大概比较：</para>
+        <table xml:id="tbl.common_text_editor"><title>Notepad,Notepad2,Notepad++,UltraEdit之间的对比</title>
+            <tgroup cols="7">
+                <colspec colnum="1" colname="col1" colwidth="1*" />
+                <colspec colnum="2" colname="col2" colwidth="1*" />
+                <colspec colnum="3" colname="col3" colwidth="1*" />
+                <colspec colnum="4" colname="col4" colwidth="1*" />
+                <colspec colnum="5" colname="col5" colwidth="1*" />
+                <colspec colnum="6" colname="col6" colwidth="1*" />
+                <colspec colnum="7" colname="col7" colwidth="1*" />
+                
+                <thead>
+                    <row><entry>文本编辑器</entry><entry>是否免费</entry><entry>功能强弱</entry><entry>易用性<co id="co.editor_usage" linkends="co.note.editor_usage" /></entry><entry>资源消耗</entry><entry>启动和编辑速度<co id="co.edit_speed" linkends="co.note.edit_speed" /></entry><entry>其他说明</entry></row>
+                </thead>
+
+                <tbody>
+                    <row><entry>Notepad</entry><entry>免费</entry><entry>非常弱</entry><entry>易用</entry><entry><emphasis>很少</emphasis></entry><entry>快</entry><entry>Windows自带，免安装</entry></row>
+                    <row><entry>Notepad2</entry><entry>免费</entry><entry>强</entry><entry>易用</entry><entry>一般</entry><entry>快</entry><entry></entry></row>
+                    <row><entry>Notepad++</entry><entry><emphasis>免费</emphasis></entry><entry><emphasis>非常强</emphasis></entry><entry><emphasis>易用</emphasis></entry><entry>稍多</entry><entry><emphasis>快</emphasis></entry><entry></entry></row>
+                    <row><entry>UltraEdit</entry><entry>收费</entry><entry>非常强</entry><entry>难用</entry><entry>非常多</entry><entry>慢</entry><entry></entry></row>
+                </tbody>
+            </tgroup>
+        </table>
+        <calloutlist>
+            <callout id="co.note.editor_usage" arearefs="co.editor_usage" >
+                <para>此处的易用性，主要指的是，有很多细节的功能上，虽然都支持某功能，但是是否方便用户使用。</para>
+                <para>比如，列编辑的功能，UltraEdit和Notepad++都支持，但是<xref linkend="npp_function_column_mode" />支持直接通过Alt+鼠标，就可以选择多列并拷贝粘贴了，很是方便使用。</para>
+            </callout>
+            <callout id="co.note.edit_speed" arearefs="co.edit_speed" >
+                <para>此处主要是，对于大一点的文件，在编辑的时候，是否很快。</para>
+            </callout>
+        </calloutlist>
+        <para>因此，根据启动速度，占用资源，功能支持等方面来综合衡量，对于notepad，notepad2，notepad++，ultraEdit来说，无疑notepad++是最好的选择了。</para>
+    </sect2>
+</sect1>
+
+<sect1 xml:id="should_know_before_npp"><title>使用Notepad++前要了解的知识</title>
+    <para>安装和使用Notepad++之前，需要了解一些相关的基本知识：</para>
+
+    <sect2 xml:id="npp_abbrev"><title>Notepad++的名称和缩写</title>
+        <para>Notepad++，对应的英文全称为Notepad Plus Plus，一般写为NotepadPlusPlus，常缩写为npp</para>
+    </sect2>
+
+    <sect2 xml:id="npp_change_setting_take_effect"><title>Notepad++修改设置后，立即生效</title>
+        <para>Notepad++中，改变某配置的值之后，（不像其他软件，需要点击“启用”或“确定”，才能看到效果，而是），立即生效，即可可以看到效果。</para>
+        <para>最明显的一个例子就是，当改变了Notepad++的主题后，即可可以看到当前主题的效果。详参：<xref linkend="npp_func_multi_themes" /></para>
+    </sect2>
+
+    <sect2 xml:id="npp_version_ansi_uni"><title>Notepad++的版本：ANSI和Unicode</title>
+        <para>Notepad++有两个版本，一个是ANSI版本，一个是UNICODE版本。</para>
+        <tip><title>如何查看Notepad++的版本</title>
+            <para>Notepad++中，点击：? &rarr; 关于Notepad++...F1</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/about_notepadplusplus.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/about_notepadplusplus.png" align="center" scalefit="0" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>即可看到对应的标有Unicode，或者ANSI的字样，我这里的是Unicode的：</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject role="html"><imagedata fileref="images/npp_version_unicode.png" align="left"   scalefit="0" width="100%" /></imageobject>
+                    <imageobject role="fo">  <imagedata fileref="images/npp_version_unicode.png" align="center" scalefit="0" width="100%"/></imageobject>
+                </mediaobject>
+            </informalfigure>
+        </tip>
+        <para>对于大多数人把Notepad++作为notepad的增强版，而需要的普通应用的话，ANSI版本和UNICODE版本，其实没啥差别。</para>
+        <para>不过，就像<xref linkend="ref.diff_ansi_and_unicode" />中所说的，如果不是非得用ANSI版本才支持的极个别插件的话，那么还是推荐大家使用Unicode版本的，其支持几乎所有的字符。</para>
+        <tip><title>Unicode几乎包括了世界上的所有字符</title>
+            <para>如题，Unicode就是为了统一世界上如此多的字符而出现的，所以推荐使用Unicode版本的Notepad++。</para>
+            <para>关于Unicode更多的解释，请参看：<xref linkend="ref.enc_unicode" /></para>
+        </tip>
+        <para>结论：不用管太多，记住用<emphasis>Unicode版本的Notepad++</emphasis>就行了。</para>
+    </sect2>
+</sect1>
+
+<sect1 xml:id="declaration"><title>声明</title>
+    <para>任何疑问，意见，建议等，都欢迎一起探讨：admin (at) crifan.com。</para>
+</sect1>
+
+</preface>
